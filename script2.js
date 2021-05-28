@@ -1,3 +1,6 @@
+const require = ('require')
+
+
 // Variables for search functions
 var query
 var userSearched
@@ -370,16 +373,21 @@ async function alphaStockSearch(symbolSelected){
     
     // compDetails = companyDetails.filter(e=>e["Symbol"]=== symbolSelected)
     // console.log(compDetails)
+    let todaysDate = Date.now();
+    let aYearAgo = new Date().setDate(new Date().getDate()-364)
+    console.log(`todays date is ${todaysDate} as a number and in human text ${new Date(todaysDate)}`)
+    console.log(`365 days ago was ${aYearAgo} as a number and in human txt ${new Date(aYearAgo)}`)
 
 
     compDetails  = await fetch(`https://finnhub.io/api/v1/stock/profile2?symbol=${symbolSelected}&token=c2m4iqqad3idnodd7tdg`).then(r => r.json())
     corpQuote = await fetch(`https://finnhub.io/api/v1/quote?symbol=${symbolSelected}&token=c2m4iqqad3idnodd7tdg`).then(r => r.json())
     basicFinancials = await fetch(`https://finnhub.io/api/v1/stock/metric?symbol=${symbolSelected}&metric=all&token=c2m4iqqad3idnodd7tdg`).then(r => r.json())
+    candleInfo = await fetch(`https://finnhub.io/api/v1/stock/candle?symbol=${symbolSelected}&resolution=M&from=${aYearAgo}&to=${todaysDate}&token=c2m4iqqad3idnodd7tdg`).then(r=>r.json())
       
     let timeStampHumanDate = new Date(corpQuote.t*1000)
     var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
     var months = ["January","February","March","April","May","June","July", "August","September","October","November","December"];
-
+ 
 
     let timeStampMonth = months[timeStampHumanDate.getMonth()]
     let timeStampDay = days[timeStampHumanDate.getDay()]
@@ -390,6 +398,7 @@ async function alphaStockSearch(symbolSelected){
     console.log(`this is alpha corpQuote`, corpQuote)
     console.log(`this is alpha CompDetails`, compDetails)
     console.log(`this is alpha basicFinancials`, basicFinancials)
+    console.log(`this is alpha candleInfo`, candleInfo)
 
 
     document.querySelector('#sharePrice').innerHTML = `Share Price (USD):  <span>$ ${corpQuote.c}</span>`
@@ -445,6 +454,86 @@ async function alphaStockSearch(symbolSelected){
 
 }
 checkLS()
+
+
+// chart testing
+
+// var Chart = require('chart.js');
+// var myChart = new Chart(ctx, {
+//   type: 'bar',
+//   data: {
+//       labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+//       datasets: [{
+//           label: '# of Votes',
+//           data: [12, 19, 3, 5, 2, 3],
+//           backgroundColor: [
+//               'rgba(255, 99, 132, 0.2)',
+//               'rgba(54, 162, 235, 0.2)',
+//               'rgba(255, 206, 86, 0.2)',
+//               'rgba(75, 192, 192, 0.2)',
+//               'rgba(153, 102, 255, 0.2)',
+//               'rgba(255, 159, 64, 0.2)'
+//           ],
+//           borderColor: [
+//               'rgba(255, 99, 132, 1)',
+//               'rgba(54, 162, 235, 1)',
+//               'rgba(255, 206, 86, 1)',
+//               'rgba(75, 192, 192, 1)',
+//               'rgba(153, 102, 255, 1)',
+//               'rgba(255, 159, 64, 1)'
+//           ],
+//           borderWidth: 1
+//       }]
+//   },
+//   options: {
+//       scales: {
+//           y: {
+//               beginAtZero: true
+//           }
+//       }
+//   }
+// });
+
+// var ctx = document.getElementById('myChart').getContext('2d');
+
+const labels = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+];
+const data = {
+  labels: labels,
+  datasets: [{
+    label: 'My First dataset',
+    // backgroundColor: 'rgb(255, 99, 132)',
+    // borderColor: 'rgb(255, 99, 132)',
+    data: [0, 10, 5, 2, 20, 30, 45],
+  }]
+};
+
+
+
+
+const config = {
+  type: 'line',
+  data,
+  options: {}
+};
+
+
+
+
+var myChart = new Chart(
+  document.getElementById('myChart'),
+  config
+);
+
+
+
+
 // a bunch of JSON Data for testing - kept it down here to avoid creating a server file to serve them up
 
 // globalQuote =[

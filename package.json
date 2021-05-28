@@ -1,0 +1,19 @@
+{
+  "name": "chart.js",
+  "version": "1.0.0",
+  "description": "This is a financial tracking tool that lets people with little to no financial experience retrieve stock and company information. Once information is presented, users are given the option of saving a specific company to a watchlist so they can revisit the stock’s performance at a later time. Users can also keep abreast of the top headlines in business news. It is a particularly useful tool for people new to business or the stock market.",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daze77/Money-for-Nothing-2021.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/daze77/Money-for-Nothing-2021/issues"
+  },
+  "homepage": "https://github.com/daze77/Money-for-Nothing-2021#readme"
+}

@@ -363,7 +363,16 @@ async function getAlpha(autoQuery){
 let corpQuote = []
 let compDetails = []
 let basicFinancials = []
+let candleInfo = []
+let data = []
+let lables = []
+let config = []
+let myChart = ""
 async function alphaStockSearch(symbolSelected){
+  myChart = ""
+  config = []
+  labels = []
+  data = []
   // searchStockValue = document.querySelector('#testinput').value = ""
   console.log(`this is the passed symbol`, symbolSelected)
 
@@ -373,10 +382,10 @@ async function alphaStockSearch(symbolSelected){
     
     // compDetails = companyDetails.filter(e=>e["Symbol"]=== symbolSelected)
     // console.log(compDetails)
-    let todaysDate = Date.now();
-    let aYearAgo = new Date().setDate(new Date().getDate()-364)
-    console.log(`todays date is ${todaysDate} as a number and in human text ${new Date(todaysDate)}`)
-    console.log(`365 days ago was ${aYearAgo} as a number and in human txt ${new Date(aYearAgo)}`)
+    let todaysDate = Math.floor(Date.now()/1000)
+    let aYearAgo = Math.floor((new Date().setDate(new Date().getDate()-360))/1000)
+    console.log(`todays date is ${todaysDate} as a number and in human text ${new Date(todaysDate*1000)}`)
+    console.log(`365 days ago was ${aYearAgo} as a number and in human txt ${new Date(aYearAgo*1000)}`)
 
 
     compDetails  = await fetch(`https://finnhub.io/api/v1/stock/profile2?symbol=${symbolSelected}&token=c2m4iqqad3idnodd7tdg`).then(r => r.json())
@@ -445,7 +454,49 @@ async function alphaStockSearch(symbolSelected){
 
 
 
-
+     labels = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ];
+    data = {
+      labels: labels,
+      datasets: [{
+        label: 'My First dataset',
+        backgroundColor: 'rgb(255, 99, 132)',
+        borderColor: 'rgb(255, 99, 132)',
+        data: candleInfo.c,
+      }]
+    };
+    
+    console.log(`this is the data`, data)
+    console.log(`this is the datasets`, data.datasets)
+    console.log(`this is the data of datasets`, data.datasets[0].data)
+    
+    
+    
+     config = {
+      type: 'line',
+      data,
+      options: {}
+    };
+    
+    
+    
+    
+     myChart = new Chart(
+      document.getElementById('myChart'),
+      config
+    );
 
 
 
@@ -496,40 +547,7 @@ checkLS()
 
 // var ctx = document.getElementById('myChart').getContext('2d');
 
-const labels = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-];
-const data = {
-  labels: labels,
-  datasets: [{
-    label: 'My First dataset',
-    // backgroundColor: 'rgb(255, 99, 132)',
-    // borderColor: 'rgb(255, 99, 132)',
-    data: [0, 10, 5, 2, 20, 30, 45],
-  }]
-};
 
-
-
-
-const config = {
-  type: 'line',
-  data,
-  options: {}
-};
-
-
-
-
-var myChart = new Chart(
-  document.getElementById('myChart'),
-  config
-);
 
 
 

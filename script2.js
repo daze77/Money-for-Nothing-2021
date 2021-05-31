@@ -296,12 +296,8 @@ function wlBtnSearch(tick) {
   alphaStockSearch(tick)
   checkLS(tick)
 }
-
-
 LS()
 getNews()
-
-
 
 // Testing a new API 
 
@@ -341,8 +337,6 @@ async function getAlpha(autoQuery){
   stockCompanySearchResults = stockCompanySearch.filter(e => e.description.includes(`${autoQuery}`) || e.displaySymbol.includes(`${autoQuery}`))
   console.log(stockCompanySearchResults)
 
- 
-
   // stockCompanySearch = bestMatches1
   console.log(stockCompanySearch)
   // let stockCompanySearchResults=stockCompanySearch
@@ -367,10 +361,7 @@ let candleInfo = []
 
 async function alphaStockSearch(symbolSelected){
 
-
-
   console.log(`this is the passed symbol`, symbolSelected)
-
 
     let todaysDate = Math.floor(Date.now()/1000)
     let aYearAgo = Math.floor((new Date().setDate(new Date().getDate()-360))/1000)
@@ -428,128 +419,54 @@ async function alphaStockSearch(symbolSelected){
     checkLS(symbolSelected)
 
     renderChart(candleInfo.c)
-
 }
 checkLS()
 
 
-
 function renderChart(data){
-
-
- 
-
-      labels = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December'
-      ];
-      data = {
-        labels: labels,
-        datasets: [{
-          label: 'Monthly Returns',
-          backgroundColor: 'rgb(255, 99, 132)',
-          borderColor: 'rgb(255, 99, 132)',
-          data: data,
-        }]
-      };
-      
-      console.log(`this is the data`, data)
-      console.log(`this is the datasets`, data.datasets)
-      console.log(`this is the data of datasets`, data.datasets[0].data)
-      
-      
-      
-      config = {
-        type: 'line',
-        data,
-        options: {}
-      };
-      
-      
-      if(myChart.id >= 0){
-        myChart.destroy()
-        myChart = new Chart(
-          document.getElementById('myChart'),
-          config
-        );
-      } else {
-
-
-        myChart = new Chart(
-          document.getElementById('myChart'),
-          config
-        )
-
-
-
-
-
-
-      }
-      
+  labels = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ];
+  data = {
+    labels: labels,
+    datasets: [{
+      label: 'Monthly Returns',
+      backgroundColor: 'rgb(255, 99, 132)',
+      borderColor: 'rgb(255, 99, 132)',
+      data: data,
+    }]
+  };
   
-
-
-
-
-
-
-
-
-
+  console.log(`this is the data`, data)
+  console.log(`this is the datasets`, data.datasets)
+  console.log(`this is the data of datasets`, data.datasets[0].data)
+  
+  config = {
+    type: 'line',
+    data,
+    options: {}
+  };
+  
+  
+  (myChart.id >= 0)? (myChart.destroy(),
+    myChart = new Chart(
+    document.getElementById('myChart'),
+    config)) : (myChart = new Chart(
+    document.getElementById('myChart'),
+    config))
+  
 }
-
-
-// chart testing
-
-// var Chart = require('chart.js');
-// var myChart = new Chart(ctx, {
-//   type: 'bar',
-//   data: {
-//       labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-//       datasets: [{
-//           label: '# of Votes',
-//           data: [12, 19, 3, 5, 2, 3],
-//           backgroundColor: [
-//               'rgba(255, 99, 132, 0.2)',
-//               'rgba(54, 162, 235, 0.2)',
-//               'rgba(255, 206, 86, 0.2)',
-//               'rgba(75, 192, 192, 0.2)',
-//               'rgba(153, 102, 255, 0.2)',
-//               'rgba(255, 159, 64, 0.2)'
-//           ],
-//           borderColor: [
-//               'rgba(255, 99, 132, 1)',
-//               'rgba(54, 162, 235, 1)',
-//               'rgba(255, 206, 86, 1)',
-//               'rgba(75, 192, 192, 1)',
-//               'rgba(153, 102, 255, 1)',
-//               'rgba(255, 159, 64, 1)'
-//           ],
-//           borderWidth: 1
-//       }]
-//   },
-//   options: {
-//       scales: {
-//           y: {
-//               beginAtZero: true
-//           }
-//       }
-//   }
-// });
-
-// var ctx = document.getElementById('myChart').getContext('2d');
-
 
 
 

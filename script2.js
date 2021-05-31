@@ -364,24 +364,14 @@ let corpQuote = []
 let compDetails = []
 let basicFinancials = []
 let candleInfo = []
-let data = []
-let lables = []
-let config = []
-let myChart = ""
+
 async function alphaStockSearch(symbolSelected){
-  myChart = ""
-  config = []
-  labels = []
-  data = []
-  // searchStockValue = document.querySelector('#testinput').value = ""
+
+
+
   console.log(`this is the passed symbol`, symbolSelected)
 
-  // will be the test code here
-    // corpQuote = globalQuote.filter(e=>e["01. symbol"]=== symbolSelected)
-    // console.log(corpQuote)
-    
-    // compDetails = companyDetails.filter(e=>e["Symbol"]=== symbolSelected)
-    // console.log(compDetails)
+
     let todaysDate = Math.floor(Date.now()/1000)
     let aYearAgo = Math.floor((new Date().setDate(new Date().getDate()-360))/1000)
     console.log(`todays date is ${todaysDate} as a number and in human text ${new Date(todaysDate*1000)}`)
@@ -429,74 +419,88 @@ async function alphaStockSearch(symbolSelected){
   document.querySelector('#cardType').innerHTML = `Sector:  ${compDetails["finnhubIndustry"]}`
 
   
-
-
- 
-  
   // url
   
-
-
-
-
-
-
-
-
-
     if (basicFinancials.metric["revenueGrowthQuarterlyYoy"] < 0) { document.querySelector("#cardQRevenue").style.color = "red" }
     if (basicFinancials.metric["epsGrowthQuarterlyYoy"] < 0) { document.querySelector("#cardQEarnings").style.color = "red" }
-
-
 
   searchStockValue = symbolSelected
     checkLS(symbolSelected)
 
+    renderChart(candleInfo.c)
+
+}
+checkLS()
 
 
-     labels = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December'
-    ];
-    data = {
-      labels: labels,
-      datasets: [{
-        label: 'My First dataset',
-        backgroundColor: 'rgb(255, 99, 132)',
-        borderColor: 'rgb(255, 99, 132)',
-        data: candleInfo.c,
-      }]
-    };
-    
-    console.log(`this is the data`, data)
-    console.log(`this is the datasets`, data.datasets)
-    console.log(`this is the data of datasets`, data.datasets[0].data)
-    
-    
-    
-     config = {
-      type: 'line',
-      data,
-      options: {}
-    };
-    
-    
-    
-    
-     myChart = new Chart(
-      document.getElementById('myChart'),
-      config
-    );
+
+function renderChart(data){
+
+
+ 
+
+      labels = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December'
+      ];
+      data = {
+        labels: labels,
+        datasets: [{
+          label: 'My First dataset',
+          backgroundColor: 'rgb(255, 99, 132)',
+          borderColor: 'rgb(255, 99, 132)',
+          data: data,
+        }]
+      };
+      
+      console.log(`this is the data`, data)
+      console.log(`this is the datasets`, data.datasets)
+      console.log(`this is the data of datasets`, data.datasets[0].data)
+      
+      
+      
+      config = {
+        type: 'line',
+        data,
+        options: {}
+      };
+      
+      
+      if(myChart.id >= 0){
+        myChart.destroy()
+        myChart = new Chart(
+          document.getElementById('myChart'),
+          config
+        );
+      } else {
+
+
+        myChart = new Chart(
+          document.getElementById('myChart'),
+          config
+        )
+
+
+
+
+
+
+      }
+      
+  
+
+
+
 
 
 
@@ -504,7 +508,6 @@ async function alphaStockSearch(symbolSelected){
 
 
 }
-checkLS()
 
 
 // chart testing

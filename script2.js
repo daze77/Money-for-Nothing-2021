@@ -398,46 +398,49 @@ async function alphaStockSearch(symbolSelected){
 
 
 
-  document.querySelector('#yearHigh').innerHTML = `52 Week High:  <span>$ ${(basicFinancials.metric["52WeekHigh"]).toFixed(2)} </span>`
-  document.querySelector('#yearLow').innerHTML = `52 Week Low:   <span>$ ${(basicFinancials.metric["52WeekLow"]).toFixed(2)} </span>`
-  document.querySelector('#allEarnings').innerHTML = `Quarter Earnings Growth:  <span id="cardQRevenue" >${(basicFinancials.metric["revenueGrowthQuarterlyYoy"]).toFixed(2)}%</span>`
-  document.querySelector('#allRevenue').innerHTML = `Quarter Rev Growth:  <span id="cardQEarnings" >${(basicFinancials.metric["epsGrowthQuarterlyYoy"]).toFixed(2)}%</span>`
+    document.querySelector('#yearHigh').innerHTML = `52 Week High:  <span>$ ${(basicFinancials.metric["52WeekHigh"]).toFixed(2)} </span>`
+    document.querySelector('#yearLow').innerHTML = `52 Week Low:   <span>$ ${(basicFinancials.metric["52WeekLow"]).toFixed(2)} </span>`
+    document.querySelector('#allEarnings').innerHTML = `Quarter Earnings Growth:  <span id="cardQRevenue" >${(basicFinancials.metric["revenueGrowthQuarterlyYoy"]).toFixed(2)}%</span>`
+    document.querySelector('#allRevenue').innerHTML = `Quarter Rev Growth:  <span id="cardQEarnings" >${(basicFinancials.metric["epsGrowthQuarterlyYoy"]).toFixed(2)}%</span>`
 
 
-  document.querySelector('#companyName').innerHTML = `<img style="width:50px" src=${compDetails.logo} />  ${compDetails["name"]}`
+    document.querySelector('#companyName').innerHTML = `<img style="width:50px" src=${compDetails.logo} />  ${compDetails["name"]}`
 
-  document.querySelector('#cardheadQuarters').innerHTML = `Headquarters: ${compDetails["country"]}`
-  document.querySelector('#cardType').innerHTML = `Sector:  ${compDetails["finnhubIndustry"]}`
+    document.querySelector('#cardheadQuarters').innerHTML = `Headquarters: ${compDetails["country"]}`
+    document.querySelector('#cardType').innerHTML = `Sector:  ${compDetails["finnhubIndustry"]}`
 
-  
-  // url
-  
     if (basicFinancials.metric["revenueGrowthQuarterlyYoy"] < 0) { document.querySelector("#cardQRevenue").style.color = "red" }
     if (basicFinancials.metric["epsGrowthQuarterlyYoy"] < 0) { document.querySelector("#cardQEarnings").style.color = "red" }
 
-  searchStockValue = symbolSelected
-    checkLS(symbolSelected)
 
-    renderChart(candleInfo.c)
+    searchStockValue = symbolSelected
+
+
+    // candleInfo Timestamps to Months Conversion
+    let candleInfoMonths = []
+    candleInfo.t.forEach(time => {
+      
+      candleInfoDates = months[(new Date(time*1000)).getMonth()]
+      console.log(`this is the canle info time stamp to get month function`, candleInfoDates)
+      candleInfoMonths.push(candleInfoDates)
+      console.log(candleInfoMonths)
+
+    })
+
+
+
+
+    checkLS(symbolSelected)
+    renderChart(candleInfo.c, candleInfoMonths)
+
+
+    // url
 }
 checkLS()
 
 
-function renderChart(data){
-  labels = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
-  ];
+function renderChart(data, months){
+  labels = months;
   data = {
     labels: labels,
     datasets: [{
@@ -474,558 +477,558 @@ function renderChart(data){
 
 // a bunch of JSON Data for testing - kept it down here to avoid creating a server file to serve them up
 
-// globalQuote =[
-//   {
-//     "01. symbol": "IBM",
-//     "02. open": "142.3200",
-//     "03. high": "143.2000",
-//     "04. low": "140.9200",
-//     "05. price": "143.1900",
-//     "06. volume": "4300732",
-//     "07. latest trading day": "2021-05-19",
-//     "08. previous close": "143.9100",
-//     "09. change": "-0.7200",
-//     "10. change percent": "-0.5003%"
-//   },
-//   {
-//     "01. symbol": "FK1",
-//     "02. open": "142.3200",
-//     "03. high": "143.2000",
-//     "04. low": "140.9200",
-//     "05. price": "143.1900",
-//     "06. volume": "4300732",
-//     "07. latest trading day": "2021-05-19",
-//     "08. previous close": "143.9100",
-//     "09. change": "-0.7200",
-//     "10. change percent": "-0.5003%"
-//   },
-//   {
-//     "01. symbol": "FK2",
-//     "02. open": "142.3200",
-//     "03. high": "143.2000",
-//     "04. low": "140.9200",
-//     "05. price": "143.1900",
-//     "06. volume": "4300732",
-//     "07. latest trading day": "2021-05-19",
-//     "08. previous close": "143.9100",
-//     "09. change": "-0.7200",
-//     "10. change percent": "-0.5003%"
-//   }
+  // globalQuote =[
+  //   {
+  //     "01. symbol": "IBM",
+  //     "02. open": "142.3200",
+  //     "03. high": "143.2000",
+  //     "04. low": "140.9200",
+  //     "05. price": "143.1900",
+  //     "06. volume": "4300732",
+  //     "07. latest trading day": "2021-05-19",
+  //     "08. previous close": "143.9100",
+  //     "09. change": "-0.7200",
+  //     "10. change percent": "-0.5003%"
+  //   },
+  //   {
+  //     "01. symbol": "FK1",
+  //     "02. open": "142.3200",
+  //     "03. high": "143.2000",
+  //     "04. low": "140.9200",
+  //     "05. price": "143.1900",
+  //     "06. volume": "4300732",
+  //     "07. latest trading day": "2021-05-19",
+  //     "08. previous close": "143.9100",
+  //     "09. change": "-0.7200",
+  //     "10. change percent": "-0.5003%"
+  //   },
+  //   {
+  //     "01. symbol": "FK2",
+  //     "02. open": "142.3200",
+  //     "03. high": "143.2000",
+  //     "04. low": "140.9200",
+  //     "05. price": "143.1900",
+  //     "06. volume": "4300732",
+  //     "07. latest trading day": "2021-05-19",
+  //     "08. previous close": "143.9100",
+  //     "09. change": "-0.7200",
+  //     "10. change percent": "-0.5003%"
+  //   }
 
-// ]
+  // ]
 
 
 
-// companyDetails = [
-//   {
-//     "Symbol": "IBM",
-//     "AssetType": "Common Stock",
-//     "Name": "International Business Machines Corporation",
-//     "Description": "International Business Machines Corporation provides integrated solutions and services worldwide. Its Cloud & Cognitive Software segment offers software for vertical and domain-specific solutions in health, financial services, supply chain, and asset management, weather, and security software and services application areas; and customer information control system and storage, and analytics and integration software solutions to support client mission critical on-premise workloads in banking, airline, and retail industries. It also offers middleware and data platform software, including Red Hat that enables the operation of clients' hybrid multi-cloud environments; and Cloud Paks, WebSphere distributed, and analytics platform software, such as DB2 distributed, information integration, and enterprise content management, as well as IoT, Blockchain and AI/Watson platforms. The company's Global Business Services segment offers business consulting services; system integration, application management, maintenance, and support services for packaged software; and finance, procurement, talent and engagement, and industry-specific business process outsourcing services. Its Global Technology Services segment provides IT infrastructure and platform services; and project, managed, outsourcing, and cloud-delivered services for enterprise IT infrastructure environments; and IT infrastructure support services. The company's Systems segment offers servers for businesses, cloud service providers, and scientific computing organizations; data storage products and solutions; and z/OS, an enterprise operating system, as well as Linux. Its Global Financing segment provides lease, installment payment, loan financing, short-term working capital financing, and remanufacturing and remarketing services. The company was formerly known as Computing-Tabulating-Recording Co. The company was incorporated in 1911 and is headquartered in Armonk, New York.",
-//     "CIK": "51143",
-//     "Exchange": "NYSE",
-//     "Currency": "USD",
-//     "Country": "USA",
-//     "Sector": "Technology",
-//     "Industry": "Information Technology Services",
-//     "Address": "One New Orchard Road, Armonk, NY, United States, 10504",
-//     "FullTimeEmployees": "345900",
-//     "FiscalYearEnd": "December",
-//     "LatestQuarter": "2021-03-31",
-//     "MarketCapitalization": "127943565312",
-//     "EBITDA": "15822000128",
-//     "PERatio": "23.9528",
-//     "PEGRatio": "1.5614",
-//     "BookValue": "23.938",
-//     "DividendPerShare": "6.52",
-//     "DividendYield": "0.0453",
-//     "EPS": "5.978",
-//     "RevenuePerShareTTM": "82.734",
-//     "ProfitMargin": "0.0728",
-//     "OperatingMarginTTM": "0.1232",
-//     "ReturnOnAssetsTTM": "0.0376",
-//     "ReturnOnEquityTTM": "0.2536",
-//     "RevenueTTM": "73779003392",
-//     "GrossProfitTTM": "35575000000",
-//     "DilutedEPSTTM": "5.978",
-//     "QuarterlyEarningsGrowthYOY": "-0.192",
-//     "QuarterlyRevenueGrowthYOY": "0.009",
-//     "AnalystTargetPrice": "143.63",
-//     "TrailingPE": "23.9528",
-//     "ForwardPE": "13.2802",
-//     "PriceToSalesRatioTTM": "1.7667",
-//     "PriceToBookRatio": "6.062",
-//     "EVToRevenue": "2.4349",
-//     "EVToEBITDA": "13.2425",
-//     "Beta": "1.2262",
-//     "52WeekHigh": "148.38",
-//     "52WeekLow": "101.8909",
-//     "50DayMovingAverage": "139.9232",
-//     "200DayMovingAverage": "127.6438",
-//     "SharesOutstanding": "893523008",
-//     "SharesFloat": "891896616",
-//     "SharesShort": "28585173",
-//     "SharesShortPriorMonth": "27009286",
-//     "ShortRatio": "4.96",
-//     "ShortPercentOutstanding": "0.03",
-//     "ShortPercentFloat": "0.032",
-//     "PercentInsiders": "0.134",
-//     "PercentInstitutions": "57.742",
-//     "ForwardAnnualDividendRate": "6.56",
-//     "ForwardAnnualDividendYield": "0.0456",
-//     "PayoutRatio": "0.7593",
-//     "DividendDate": "2021-06-10",
-//     "ExDividendDate": "2021-05-07",
-//     "LastSplitFactor": "2:1",
-//     "LastSplitDate": "1999-05-27"
-//   },
-//   {
-//     "Symbol": "FK1",
-//     "AssetType": "Common Stock",
-//     "Name": "Fake Company 1",
-//     "Description": "International Business Machines Corporation provides integrated solutions and services worldwide. Its Cloud & Cognitive Software segment offers software for vertical and domain-specific solutions in health, financial services, supply chain, and asset management, weather, and security software and services application areas; and customer information control system and storage, and analytics and integration software solutions to support client mission critical on-premise workloads in banking, airline, and retail industries. It also offers middleware and data platform software, including Red Hat that enables the operation of clients' hybrid multi-cloud environments; and Cloud Paks, WebSphere distributed, and analytics platform software, such as DB2 distributed, information integration, and enterprise content management, as well as IoT, Blockchain and AI/Watson platforms. The company's Global Business Services segment offers business consulting services; system integration, application management, maintenance, and support services for packaged software; and finance, procurement, talent and engagement, and industry-specific business process outsourcing services. Its Global Technology Services segment provides IT infrastructure and platform services; and project, managed, outsourcing, and cloud-delivered services for enterprise IT infrastructure environments; and IT infrastructure support services. The company's Systems segment offers servers for businesses, cloud service providers, and scientific computing organizations; data storage products and solutions; and z/OS, an enterprise operating system, as well as Linux. Its Global Financing segment provides lease, installment payment, loan financing, short-term working capital financing, and remanufacturing and remarketing services. The company was formerly known as Computing-Tabulating-Recording Co. The company was incorporated in 1911 and is headquartered in Armonk, New York.",
-//     "CIK": "51143",
-//     "Exchange": "NYSE",
-//     "Currency": "USD",
-//     "Country": "USA",
-//     "Sector": "Technology",
-//     "Industry": "Information Technology Services",
-//     "Address": "One New Orchard Road, Armonk, NY, United States, 10504",
-//     "FullTimeEmployees": "345900",
-//     "FiscalYearEnd": "December",
-//     "LatestQuarter": "2021-03-31",
-//     "MarketCapitalization": "127943565312",
-//     "EBITDA": "15822000128",
-//     "PERatio": "23.9528",
-//     "PEGRatio": "1.5614",
-//     "BookValue": "23.938",
-//     "DividendPerShare": "6.52",
-//     "DividendYield": "0.0453",
-//     "EPS": "5.978",
-//     "RevenuePerShareTTM": "82.734",
-//     "ProfitMargin": "0.0728",
-//     "OperatingMarginTTM": "0.1232",
-//     "ReturnOnAssetsTTM": "0.0376",
-//     "ReturnOnEquityTTM": "0.2536",
-//     "RevenueTTM": "73779003392",
-//     "GrossProfitTTM": "35575000000",
-//     "DilutedEPSTTM": "5.978",
-//     "QuarterlyEarningsGrowthYOY": "-0.192",
-//     "QuarterlyRevenueGrowthYOY": "0.009",
-//     "AnalystTargetPrice": "143.63",
-//     "TrailingPE": "23.9528",
-//     "ForwardPE": "13.2802",
-//     "PriceToSalesRatioTTM": "1.7667",
-//     "PriceToBookRatio": "6.062",
-//     "EVToRevenue": "2.4349",
-//     "EVToEBITDA": "13.2425",
-//     "Beta": "1.2262",
-//     "52WeekHigh": "148.38",
-//     "52WeekLow": "101.8909",
-//     "50DayMovingAverage": "139.9232",
-//     "200DayMovingAverage": "127.6438",
-//     "SharesOutstanding": "893523008",
-//     "SharesFloat": "891896616",
-//     "SharesShort": "28585173",
-//     "SharesShortPriorMonth": "27009286",
-//     "ShortRatio": "4.96",
-//     "ShortPercentOutstanding": "0.03",
-//     "ShortPercentFloat": "0.032",
-//     "PercentInsiders": "0.134",
-//     "PercentInstitutions": "57.742",
-//     "ForwardAnnualDividendRate": "6.56",
-//     "ForwardAnnualDividendYield": "0.0456",
-//     "PayoutRatio": "0.7593",
-//     "DividendDate": "2021-06-10",
-//     "ExDividendDate": "2021-05-07",
-//     "LastSplitFactor": "2:1",
-//     "LastSplitDate": "1999-05-27"
-//   },
-//   {
-//     "Symbol": "FK2",
-//     "AssetType": "Common Stock",
-//     "Name": "Fake Company 2",
-//     "Description": "International Business Machines Corporation provides integrated solutions and services worldwide. Its Cloud & Cognitive Software segment offers software for vertical and domain-specific solutions in health, financial services, supply chain, and asset management, weather, and security software and services application areas; and customer information control system and storage, and analytics and integration software solutions to support client mission critical on-premise workloads in banking, airline, and retail industries. It also offers middleware and data platform software, including Red Hat that enables the operation of clients' hybrid multi-cloud environments; and Cloud Paks, WebSphere distributed, and analytics platform software, such as DB2 distributed, information integration, and enterprise content management, as well as IoT, Blockchain and AI/Watson platforms. The company's Global Business Services segment offers business consulting services; system integration, application management, maintenance, and support services for packaged software; and finance, procurement, talent and engagement, and industry-specific business process outsourcing services. Its Global Technology Services segment provides IT infrastructure and platform services; and project, managed, outsourcing, and cloud-delivered services for enterprise IT infrastructure environments; and IT infrastructure support services. The company's Systems segment offers servers for businesses, cloud service providers, and scientific computing organizations; data storage products and solutions; and z/OS, an enterprise operating system, as well as Linux. Its Global Financing segment provides lease, installment payment, loan financing, short-term working capital financing, and remanufacturing and remarketing services. The company was formerly known as Computing-Tabulating-Recording Co. The company was incorporated in 1911 and is headquartered in Armonk, New York.",
-//     "CIK": "51143",
-//     "Exchange": "NYSE",
-//     "Currency": "USD",
-//     "Country": "USA",
-//     "Sector": "Technology",
-//     "Industry": "Information Technology Services",
-//     "Address": "One New Orchard Road, Armonk, NY, United States, 10504",
-//     "FullTimeEmployees": "345900",
-//     "FiscalYearEnd": "December",
-//     "LatestQuarter": "2021-03-31",
-//     "MarketCapitalization": "127943565312",
-//     "EBITDA": "15822000128",
-//     "PERatio": "23.9528",
-//     "PEGRatio": "1.5614",
-//     "BookValue": "23.938",
-//     "DividendPerShare": "6.52",
-//     "DividendYield": "0.0453",
-//     "EPS": "5.978",
-//     "RevenuePerShareTTM": "82.734",
-//     "ProfitMargin": "0.0728",
-//     "OperatingMarginTTM": "0.1232",
-//     "ReturnOnAssetsTTM": "0.0376",
-//     "ReturnOnEquityTTM": "0.2536",
-//     "RevenueTTM": "73779003392",
-//     "GrossProfitTTM": "35575000000",
-//     "DilutedEPSTTM": "5.978",
-//     "QuarterlyEarningsGrowthYOY": "-0.192",
-//     "QuarterlyRevenueGrowthYOY": "0.009",
-//     "AnalystTargetPrice": "143.63",
-//     "TrailingPE": "23.9528",
-//     "ForwardPE": "13.2802",
-//     "PriceToSalesRatioTTM": "1.7667",
-//     "PriceToBookRatio": "6.062",
-//     "EVToRevenue": "2.4349",
-//     "EVToEBITDA": "13.2425",
-//     "Beta": "1.2262",
-//     "52WeekHigh": "148.38",
-//     "52WeekLow": "101.8909",
-//     "50DayMovingAverage": "139.9232",
-//     "200DayMovingAverage": "127.6438",
-//     "SharesOutstanding": "893523008",
-//     "SharesFloat": "891896616",
-//     "SharesShort": "28585173",
-//     "SharesShortPriorMonth": "27009286",
-//     "ShortRatio": "4.96",
-//     "ShortPercentOutstanding": "0.03",
-//     "ShortPercentFloat": "0.032",
-//     "PercentInsiders": "0.134",
-//     "PercentInstitutions": "57.742",
-//     "ForwardAnnualDividendRate": "6.56",
-//     "ForwardAnnualDividendYield": "0.0456",
-//     "PayoutRatio": "0.7593",
-//     "DividendDate": "2021-06-10",
-//     "ExDividendDate": "2021-05-07",
-//     "LastSplitFactor": "2:1",
-//     "LastSplitDate": "1999-05-27"
-//   }
-// ]
+  // companyDetails = [
+  //   {
+  //     "Symbol": "IBM",
+  //     "AssetType": "Common Stock",
+  //     "Name": "International Business Machines Corporation",
+  //     "Description": "International Business Machines Corporation provides integrated solutions and services worldwide. Its Cloud & Cognitive Software segment offers software for vertical and domain-specific solutions in health, financial services, supply chain, and asset management, weather, and security software and services application areas; and customer information control system and storage, and analytics and integration software solutions to support client mission critical on-premise workloads in banking, airline, and retail industries. It also offers middleware and data platform software, including Red Hat that enables the operation of clients' hybrid multi-cloud environments; and Cloud Paks, WebSphere distributed, and analytics platform software, such as DB2 distributed, information integration, and enterprise content management, as well as IoT, Blockchain and AI/Watson platforms. The company's Global Business Services segment offers business consulting services; system integration, application management, maintenance, and support services for packaged software; and finance, procurement, talent and engagement, and industry-specific business process outsourcing services. Its Global Technology Services segment provides IT infrastructure and platform services; and project, managed, outsourcing, and cloud-delivered services for enterprise IT infrastructure environments; and IT infrastructure support services. The company's Systems segment offers servers for businesses, cloud service providers, and scientific computing organizations; data storage products and solutions; and z/OS, an enterprise operating system, as well as Linux. Its Global Financing segment provides lease, installment payment, loan financing, short-term working capital financing, and remanufacturing and remarketing services. The company was formerly known as Computing-Tabulating-Recording Co. The company was incorporated in 1911 and is headquartered in Armonk, New York.",
+  //     "CIK": "51143",
+  //     "Exchange": "NYSE",
+  //     "Currency": "USD",
+  //     "Country": "USA",
+  //     "Sector": "Technology",
+  //     "Industry": "Information Technology Services",
+  //     "Address": "One New Orchard Road, Armonk, NY, United States, 10504",
+  //     "FullTimeEmployees": "345900",
+  //     "FiscalYearEnd": "December",
+  //     "LatestQuarter": "2021-03-31",
+  //     "MarketCapitalization": "127943565312",
+  //     "EBITDA": "15822000128",
+  //     "PERatio": "23.9528",
+  //     "PEGRatio": "1.5614",
+  //     "BookValue": "23.938",
+  //     "DividendPerShare": "6.52",
+  //     "DividendYield": "0.0453",
+  //     "EPS": "5.978",
+  //     "RevenuePerShareTTM": "82.734",
+  //     "ProfitMargin": "0.0728",
+  //     "OperatingMarginTTM": "0.1232",
+  //     "ReturnOnAssetsTTM": "0.0376",
+  //     "ReturnOnEquityTTM": "0.2536",
+  //     "RevenueTTM": "73779003392",
+  //     "GrossProfitTTM": "35575000000",
+  //     "DilutedEPSTTM": "5.978",
+  //     "QuarterlyEarningsGrowthYOY": "-0.192",
+  //     "QuarterlyRevenueGrowthYOY": "0.009",
+  //     "AnalystTargetPrice": "143.63",
+  //     "TrailingPE": "23.9528",
+  //     "ForwardPE": "13.2802",
+  //     "PriceToSalesRatioTTM": "1.7667",
+  //     "PriceToBookRatio": "6.062",
+  //     "EVToRevenue": "2.4349",
+  //     "EVToEBITDA": "13.2425",
+  //     "Beta": "1.2262",
+  //     "52WeekHigh": "148.38",
+  //     "52WeekLow": "101.8909",
+  //     "50DayMovingAverage": "139.9232",
+  //     "200DayMovingAverage": "127.6438",
+  //     "SharesOutstanding": "893523008",
+  //     "SharesFloat": "891896616",
+  //     "SharesShort": "28585173",
+  //     "SharesShortPriorMonth": "27009286",
+  //     "ShortRatio": "4.96",
+  //     "ShortPercentOutstanding": "0.03",
+  //     "ShortPercentFloat": "0.032",
+  //     "PercentInsiders": "0.134",
+  //     "PercentInstitutions": "57.742",
+  //     "ForwardAnnualDividendRate": "6.56",
+  //     "ForwardAnnualDividendYield": "0.0456",
+  //     "PayoutRatio": "0.7593",
+  //     "DividendDate": "2021-06-10",
+  //     "ExDividendDate": "2021-05-07",
+  //     "LastSplitFactor": "2:1",
+  //     "LastSplitDate": "1999-05-27"
+  //   },
+  //   {
+  //     "Symbol": "FK1",
+  //     "AssetType": "Common Stock",
+  //     "Name": "Fake Company 1",
+  //     "Description": "International Business Machines Corporation provides integrated solutions and services worldwide. Its Cloud & Cognitive Software segment offers software for vertical and domain-specific solutions in health, financial services, supply chain, and asset management, weather, and security software and services application areas; and customer information control system and storage, and analytics and integration software solutions to support client mission critical on-premise workloads in banking, airline, and retail industries. It also offers middleware and data platform software, including Red Hat that enables the operation of clients' hybrid multi-cloud environments; and Cloud Paks, WebSphere distributed, and analytics platform software, such as DB2 distributed, information integration, and enterprise content management, as well as IoT, Blockchain and AI/Watson platforms. The company's Global Business Services segment offers business consulting services; system integration, application management, maintenance, and support services for packaged software; and finance, procurement, talent and engagement, and industry-specific business process outsourcing services. Its Global Technology Services segment provides IT infrastructure and platform services; and project, managed, outsourcing, and cloud-delivered services for enterprise IT infrastructure environments; and IT infrastructure support services. The company's Systems segment offers servers for businesses, cloud service providers, and scientific computing organizations; data storage products and solutions; and z/OS, an enterprise operating system, as well as Linux. Its Global Financing segment provides lease, installment payment, loan financing, short-term working capital financing, and remanufacturing and remarketing services. The company was formerly known as Computing-Tabulating-Recording Co. The company was incorporated in 1911 and is headquartered in Armonk, New York.",
+  //     "CIK": "51143",
+  //     "Exchange": "NYSE",
+  //     "Currency": "USD",
+  //     "Country": "USA",
+  //     "Sector": "Technology",
+  //     "Industry": "Information Technology Services",
+  //     "Address": "One New Orchard Road, Armonk, NY, United States, 10504",
+  //     "FullTimeEmployees": "345900",
+  //     "FiscalYearEnd": "December",
+  //     "LatestQuarter": "2021-03-31",
+  //     "MarketCapitalization": "127943565312",
+  //     "EBITDA": "15822000128",
+  //     "PERatio": "23.9528",
+  //     "PEGRatio": "1.5614",
+  //     "BookValue": "23.938",
+  //     "DividendPerShare": "6.52",
+  //     "DividendYield": "0.0453",
+  //     "EPS": "5.978",
+  //     "RevenuePerShareTTM": "82.734",
+  //     "ProfitMargin": "0.0728",
+  //     "OperatingMarginTTM": "0.1232",
+  //     "ReturnOnAssetsTTM": "0.0376",
+  //     "ReturnOnEquityTTM": "0.2536",
+  //     "RevenueTTM": "73779003392",
+  //     "GrossProfitTTM": "35575000000",
+  //     "DilutedEPSTTM": "5.978",
+  //     "QuarterlyEarningsGrowthYOY": "-0.192",
+  //     "QuarterlyRevenueGrowthYOY": "0.009",
+  //     "AnalystTargetPrice": "143.63",
+  //     "TrailingPE": "23.9528",
+  //     "ForwardPE": "13.2802",
+  //     "PriceToSalesRatioTTM": "1.7667",
+  //     "PriceToBookRatio": "6.062",
+  //     "EVToRevenue": "2.4349",
+  //     "EVToEBITDA": "13.2425",
+  //     "Beta": "1.2262",
+  //     "52WeekHigh": "148.38",
+  //     "52WeekLow": "101.8909",
+  //     "50DayMovingAverage": "139.9232",
+  //     "200DayMovingAverage": "127.6438",
+  //     "SharesOutstanding": "893523008",
+  //     "SharesFloat": "891896616",
+  //     "SharesShort": "28585173",
+  //     "SharesShortPriorMonth": "27009286",
+  //     "ShortRatio": "4.96",
+  //     "ShortPercentOutstanding": "0.03",
+  //     "ShortPercentFloat": "0.032",
+  //     "PercentInsiders": "0.134",
+  //     "PercentInstitutions": "57.742",
+  //     "ForwardAnnualDividendRate": "6.56",
+  //     "ForwardAnnualDividendYield": "0.0456",
+  //     "PayoutRatio": "0.7593",
+  //     "DividendDate": "2021-06-10",
+  //     "ExDividendDate": "2021-05-07",
+  //     "LastSplitFactor": "2:1",
+  //     "LastSplitDate": "1999-05-27"
+  //   },
+  //   {
+  //     "Symbol": "FK2",
+  //     "AssetType": "Common Stock",
+  //     "Name": "Fake Company 2",
+  //     "Description": "International Business Machines Corporation provides integrated solutions and services worldwide. Its Cloud & Cognitive Software segment offers software for vertical and domain-specific solutions in health, financial services, supply chain, and asset management, weather, and security software and services application areas; and customer information control system and storage, and analytics and integration software solutions to support client mission critical on-premise workloads in banking, airline, and retail industries. It also offers middleware and data platform software, including Red Hat that enables the operation of clients' hybrid multi-cloud environments; and Cloud Paks, WebSphere distributed, and analytics platform software, such as DB2 distributed, information integration, and enterprise content management, as well as IoT, Blockchain and AI/Watson platforms. The company's Global Business Services segment offers business consulting services; system integration, application management, maintenance, and support services for packaged software; and finance, procurement, talent and engagement, and industry-specific business process outsourcing services. Its Global Technology Services segment provides IT infrastructure and platform services; and project, managed, outsourcing, and cloud-delivered services for enterprise IT infrastructure environments; and IT infrastructure support services. The company's Systems segment offers servers for businesses, cloud service providers, and scientific computing organizations; data storage products and solutions; and z/OS, an enterprise operating system, as well as Linux. Its Global Financing segment provides lease, installment payment, loan financing, short-term working capital financing, and remanufacturing and remarketing services. The company was formerly known as Computing-Tabulating-Recording Co. The company was incorporated in 1911 and is headquartered in Armonk, New York.",
+  //     "CIK": "51143",
+  //     "Exchange": "NYSE",
+  //     "Currency": "USD",
+  //     "Country": "USA",
+  //     "Sector": "Technology",
+  //     "Industry": "Information Technology Services",
+  //     "Address": "One New Orchard Road, Armonk, NY, United States, 10504",
+  //     "FullTimeEmployees": "345900",
+  //     "FiscalYearEnd": "December",
+  //     "LatestQuarter": "2021-03-31",
+  //     "MarketCapitalization": "127943565312",
+  //     "EBITDA": "15822000128",
+  //     "PERatio": "23.9528",
+  //     "PEGRatio": "1.5614",
+  //     "BookValue": "23.938",
+  //     "DividendPerShare": "6.52",
+  //     "DividendYield": "0.0453",
+  //     "EPS": "5.978",
+  //     "RevenuePerShareTTM": "82.734",
+  //     "ProfitMargin": "0.0728",
+  //     "OperatingMarginTTM": "0.1232",
+  //     "ReturnOnAssetsTTM": "0.0376",
+  //     "ReturnOnEquityTTM": "0.2536",
+  //     "RevenueTTM": "73779003392",
+  //     "GrossProfitTTM": "35575000000",
+  //     "DilutedEPSTTM": "5.978",
+  //     "QuarterlyEarningsGrowthYOY": "-0.192",
+  //     "QuarterlyRevenueGrowthYOY": "0.009",
+  //     "AnalystTargetPrice": "143.63",
+  //     "TrailingPE": "23.9528",
+  //     "ForwardPE": "13.2802",
+  //     "PriceToSalesRatioTTM": "1.7667",
+  //     "PriceToBookRatio": "6.062",
+  //     "EVToRevenue": "2.4349",
+  //     "EVToEBITDA": "13.2425",
+  //     "Beta": "1.2262",
+  //     "52WeekHigh": "148.38",
+  //     "52WeekLow": "101.8909",
+  //     "50DayMovingAverage": "139.9232",
+  //     "200DayMovingAverage": "127.6438",
+  //     "SharesOutstanding": "893523008",
+  //     "SharesFloat": "891896616",
+  //     "SharesShort": "28585173",
+  //     "SharesShortPriorMonth": "27009286",
+  //     "ShortRatio": "4.96",
+  //     "ShortPercentOutstanding": "0.03",
+  //     "ShortPercentFloat": "0.032",
+  //     "PercentInsiders": "0.134",
+  //     "PercentInstitutions": "57.742",
+  //     "ForwardAnnualDividendRate": "6.56",
+  //     "ForwardAnnualDividendYield": "0.0456",
+  //     "PayoutRatio": "0.7593",
+  //     "DividendDate": "2021-06-10",
+  //     "ExDividendDate": "2021-05-07",
+  //     "LastSplitFactor": "2:1",
+  //     "LastSplitDate": "1999-05-27"
+  //   }
+  // ]
 
-// bestMatches1 = [
-//     {
-//       "1. symbol": "TESO",
-//       "2. name": "Tesco Corporation USA",
-//       "3. type": "Equity",
-//       "4. region": "United States",
-//       "5. marketOpen": "09:30",
-//       "6. marketClose": "16:00",
-//       "7. timezone": "UTC-04",
-//       "8. currency": "USD",
-//       "9. matchScore": "0.8889"
-//     },
-//     {
-//       "1. symbol": "TSCO.LON",
-//       "2. name": "Tesco PLC",
-//       "3. type": "Equity",
-//       "4. region": "United Kingdom",
-//       "5. marketOpen": "08:00",
-//       "6. marketClose": "16:30",
-//       "7. timezone": "UTC+01",
-//       "8. currency": "GBX",
-//       "9. matchScore": "0.7273"
-//     },
-//     {
-//       "1. symbol": "TSCDF",
-//       "2. name": "Tesco plc",
-//       "3. type": "Equity",
-//       "4. region": "United States",
-//       "5. marketOpen": "09:30",
-//       "6. marketClose": "16:00",
-//       "7. timezone": "UTC-04",
-//       "8. currency": "USD",
-//       "9. matchScore": "0.7143"
-//     },
-//     {
-//       "1. symbol": "TSCDY",
-//       "2. name": "Tesco plc",
-//       "3. type": "Equity",
-//       "4. region": "United States",
-//       "5. marketOpen": "09:30",
-//       "6. marketClose": "16:00",
-//       "7. timezone": "UTC-04",
-//       "8. currency": "USD",
-//       "9. matchScore": "0.7143"
-//     },
-//     {
-//       "1. symbol": "TCO.DEX",
-//       "2. name": "Tesco PLC",
-//       "3. type": "Equity",
-//       "4. region": "XETRA",
-//       "5. marketOpen": "08:00",
-//       "6. marketClose": "20:00",
-//       "7. timezone": "UTC+02",
-//       "8. currency": "EUR",
-//       "9. matchScore": "0.7143"
-//     },
-//     {
-//       "1. symbol": "TCO.FRK",
-//       "2. name": "Tesco PLC",
-//       "3. type": "Equity",
-//       "4. region": "Frankfurt",
-//       "5. marketOpen": "08:00",
-//       "6. marketClose": "20:00",
-//       "7. timezone": "UTC+02",
-//       "8. currency": "EUR",
-//       "9. matchScore": "0.7143"
-//     },
-//     {
-//       "1. symbol": "TCEHY",
-//       "2. name": "Tencent Holdings Ltd",
-//       "3. type": "Equity",
-//       "4. region": "United States",
-//       "5. marketOpen": "09:30",
-//       "6. marketClose": "16:00",
-//       "7. timezone": "UTC-04",
-//       "8. currency": "USD",
-//       "9. matchScore": "0.5185"
-//     },
-//     {
-//       "1. symbol": "TCTZF",
-//       "2. name": "Tencent Holdings Ltd",
-//       "3. type": "Equity",
-//       "4. region": "United States",
-//       "5. marketOpen": "09:30",
-//       "6. marketClose": "16:00",
-//       "7. timezone": "UTC-04",
-//       "8. currency": "USD",
-//       "9. matchScore": "0.5185"
-//     },
-//     {
-//       "1. symbol": "0Z4S.LON",
-//       "2. name": "Tencent Holdings Limited",
-//       "3. type": "Equity",
-//       "4. region": "United Kingdom",
-//       "5. marketOpen": "08:00",
-//       "6. marketClose": "16:30",
-//       "7. timezone": "UTC+01",
-//       "8. currency": "GBX",
-//       "9. matchScore": "0.4516"
-//     },
-//     {
-//       "1. symbol": "NNN1.FRK",
-//       "2. name": "Tencent Holdings Limited",
-//       "3. type": "Equity",
-//       "4. region": "Frankfurt",
-//       "5. marketOpen": "08:00",
-//       "6. marketClose": "20:00",
-//       "7. timezone": "UTC+02",
-//       "8. currency": "EUR",
-//       "9. matchScore": "0.4516"
-//     },
-//     {
-//       "1. symbol": "NNND.FRK",
-//       "2. name": "Tencent Holdings Limited",
-//       "3. type": "Equity",
-//       "4. region": "Frankfurt",
-//       "5. marketOpen": "08:00",
-//       "6. marketClose": "20:00",
-//       "7. timezone": "UTC+02",
-//       "8. currency": "EUR",
-//       "9. matchScore": "0.4516"
-//     },
-//     {
-//       "1. symbol": "TME",
-//       "2. name": "Tencent Music Entertainment Group",
-//       "3. type": "Equity",
-//       "4. region": "United States",
-//       "5. marketOpen": "09:30",
-//       "6. marketClose": "16:00",
-//       "7. timezone": "UTC-04",
-//       "8. currency": "USD",
-//       "9. matchScore": "0.4000"
-//     },
-//     {
-//       "1. symbol": "BA",
-//       "2. name": "Boeing Company",
-//       "3. type": "Equity",
-//       "4. region": "United States",
-//       "5. marketOpen": "09:30",
-//       "6. marketClose": "16:00",
-//       "7. timezone": "UTC-04",
-//       "8. currency": "USD",
-//       "9. matchScore": "1.0000"
-//     },
-//     {
-//       "1. symbol": "BAA",
-//       "2. name": "Banro Corporation USA",
-//       "3. type": "Equity",
-//       "4. region": "United States",
-//       "5. marketOpen": "09:30",
-//       "6. marketClose": "16:00",
-//       "7. timezone": "UTC-04",
-//       "8. currency": "USD",
-//       "9. matchScore": "0.8000"
-//     },
-//     {
-//       "1. symbol": "BAB",
-//       "2. name": "Invesco Taxable Municipal Bond ETF",
-//       "3. type": "ETF",
-//       "4. region": "United States",
-//       "5. marketOpen": "09:30",
-//       "6. marketClose": "16:00",
-//       "7. timezone": "UTC-04",
-//       "8. currency": "USD",
-//       "9. matchScore": "0.8000"
-//     },
-//     {
-//       "1. symbol": "BA.LON",
-//       "2. name": "BAE Systems plc",
-//       "3. type": "Equity",
-//       "4. region": "United Kingdom",
-//       "5. marketOpen": "08:00",
-//       "6. marketClose": "16:30",
-//       "7. timezone": "UTC+01",
-//       "8. currency": "GBX",
-//       "9. matchScore": "0.6667"
-//     },
-//     {
-//       "1. symbol": "BABA",
-//       "2. name": "Alibaba Group Holding Ltd",
-//       "3. type": "Equity",
-//       "4. region": "United States",
-//       "5. marketOpen": "09:30",
-//       "6. marketClose": "16:00",
-//       "7. timezone": "UTC-04",
-//       "8. currency": "USD",
-//       "9. matchScore": "0.6667"
-//     },
-//     {
-//       "1. symbol": "BABB",
-//       "2. name": "BAB Inc",
-//       "3. type": "Equity",
-//       "4. region": "United States",
-//       "5. marketOpen": "09:30",
-//       "6. marketClose": "16:00",
-//       "7. timezone": "UTC-04",
-//       "8. currency": "USD",
-//       "9. matchScore": "0.6667"
-//     },
-//     {
-//       "1. symbol": "BA3.FRK",
-//       "2. name": "Brooks Automation",
-//       "3. type": "Equity",
-//       "4. region": "Frankfurt",
-//       "5. marketOpen": "08:00",
-//       "6. marketClose": "20:00",
-//       "7. timezone": "UTC+02",
-//       "8. currency": "EUR",
-//       "9. matchScore": "0.5714"
-//     },
-//     {
-//       "1. symbol": "BAAPX",
-//       "2. name": "BlackRock Aggressive GwthPrprdPtfInvstrA",
-//       "3. type": "Mutual Fund",
-//       "4. region": "United States",
-//       "5. marketOpen": "09:30",
-//       "6. marketClose": "16:00",
-//       "7. timezone": "UTC-04",
-//       "8. currency": "USD",
-//       "9. matchScore": "0.5714"
-//     },
-//     {
-//       "1. symbol": "BABAF",
-//       "2. name": "Alibaba Group Holding Ltd",
-//       "3. type": "Equity",
-//       "4. region": "United States",
-//       "5. marketOpen": "09:30",
-//       "6. marketClose": "16:00",
-//       "7. timezone": "UTC-04",
-//       "8. currency": "USD",
-//       "9. matchScore": "0.5714"
-//     },
-//     {
-//       "1. symbol": "BABA34.SAO",
-//       "2. name": "BABA34",
-//       "3. type": "Equity",
-//       "4. region": "Brazil/Sao Paolo",
-//       "5. marketOpen": "10:00",
-//       "6. marketClose": "17:30",
-//       "7. timezone": "UTC-03",
-//       "8. currency": "BRL",
-//       "9. matchScore": "0.5000"
-//     },
-//     {
-//       "1. symbol": "SAIC",
-//       "2. name": "Science Applications International Corp",
-//       "3. type": "Equity",
-//       "4. region": "United States",
-//       "5. marketOpen": "09:30",
-//       "6. marketClose": "16:00",
-//       "7. timezone": "UTC-04",
-//       "8. currency": "USD",
-//       "9. matchScore": "1.0000"
-//     },
-//     {
-//       "1. symbol": "SAICX",
-//       "2. name": "JPMORGAN SMARTALLOCATION INCOME FUND CLASS C",
-//       "3. type": "Mutual Fund",
-//       "4. region": "United States",
-//       "5. marketOpen": "09:30",
-//       "6. marketClose": "16:00",
-//       "7. timezone": "UTC-04",
-//       "8. currency": "USD",
-//       "9. matchScore": "0.8889"
-//     },
-//     {
-//       "1. symbol": "SAIC11B.SAO",
-//       "2. name": "Fundo Investimento Imobiliario FII",
-//       "3. type": "ETF",
-//       "4. region": "Brazil/Sao Paolo",
-//       "5. marketOpen": "10:00",
-//       "6. marketClose": "17:30",
-//       "7. timezone": "UTC-03",
-//       "8. currency": "BRL",
-//       "9. matchScore": "0.5714"
-//     },
-//     {
-//       "1. symbol": "600104.SHH",
-//       "2. name": "SAIC Motor Corporation Ltd",
-//       "3. type": "Equity",
-//       "4. region": "Shanghai",
-//       "5. marketOpen": "09:30",
-//       "6. marketClose": "15:00",
-//       "7. timezone": "UTC+08",
-//       "8. currency": "CNY",
-//       "9. matchScore": "0.2667"
-//     },
-//     {
-//       "1. symbol": "IBM",
-//       "2. name": "International Business Machines Corporation",
-//       "3. type": "Equity",
-//       "4. region": "USA",
-//       "5. marketOpen": "09:30",
-//       "6. marketClose": "15:00",
-//       "7. timezone": "UTC+08",
-//       "8. currency": "USD",
-//       "9. matchScore": "0.26671"
-//     },
-//     {
-//       "1. symbol": "FK1",
-//       "2. name": "Fake Company 1",
-//       "3. type": "Equity",
-//       "4. region": "USA",
-//       "5. marketOpen": "09:30",
-//       "6. marketClose": "15:00",
-//       "7. timezone": "UTC+08",
-//       "8. currency": "USD",
-//       "9. matchScore": "0.26671"
-//     },
-//     {
-//       "1. symbol": "FK2",
-//       "2. name": "Fake Company 2",
-//       "3. type": "Equity",
-//       "4. region": "USA",
-//       "5. marketOpen": "09:30",
-//       "6. marketClose": "15:00",
-//       "7. timezone": "UTC+08",
-//       "8. currency": "USD",
-//       "9. matchScore": "0.26671"
-//     }
-// ]
+  // bestMatches1 = [
+  //     {
+  //       "1. symbol": "TESO",
+  //       "2. name": "Tesco Corporation USA",
+  //       "3. type": "Equity",
+  //       "4. region": "United States",
+  //       "5. marketOpen": "09:30",
+  //       "6. marketClose": "16:00",
+  //       "7. timezone": "UTC-04",
+  //       "8. currency": "USD",
+  //       "9. matchScore": "0.8889"
+  //     },
+  //     {
+  //       "1. symbol": "TSCO.LON",
+  //       "2. name": "Tesco PLC",
+  //       "3. type": "Equity",
+  //       "4. region": "United Kingdom",
+  //       "5. marketOpen": "08:00",
+  //       "6. marketClose": "16:30",
+  //       "7. timezone": "UTC+01",
+  //       "8. currency": "GBX",
+  //       "9. matchScore": "0.7273"
+  //     },
+  //     {
+  //       "1. symbol": "TSCDF",
+  //       "2. name": "Tesco plc",
+  //       "3. type": "Equity",
+  //       "4. region": "United States",
+  //       "5. marketOpen": "09:30",
+  //       "6. marketClose": "16:00",
+  //       "7. timezone": "UTC-04",
+  //       "8. currency": "USD",
+  //       "9. matchScore": "0.7143"
+  //     },
+  //     {
+  //       "1. symbol": "TSCDY",
+  //       "2. name": "Tesco plc",
+  //       "3. type": "Equity",
+  //       "4. region": "United States",
+  //       "5. marketOpen": "09:30",
+  //       "6. marketClose": "16:00",
+  //       "7. timezone": "UTC-04",
+  //       "8. currency": "USD",
+  //       "9. matchScore": "0.7143"
+  //     },
+  //     {
+  //       "1. symbol": "TCO.DEX",
+  //       "2. name": "Tesco PLC",
+  //       "3. type": "Equity",
+  //       "4. region": "XETRA",
+  //       "5. marketOpen": "08:00",
+  //       "6. marketClose": "20:00",
+  //       "7. timezone": "UTC+02",
+  //       "8. currency": "EUR",
+  //       "9. matchScore": "0.7143"
+  //     },
+  //     {
+  //       "1. symbol": "TCO.FRK",
+  //       "2. name": "Tesco PLC",
+  //       "3. type": "Equity",
+  //       "4. region": "Frankfurt",
+  //       "5. marketOpen": "08:00",
+  //       "6. marketClose": "20:00",
+  //       "7. timezone": "UTC+02",
+  //       "8. currency": "EUR",
+  //       "9. matchScore": "0.7143"
+  //     },
+  //     {
+  //       "1. symbol": "TCEHY",
+  //       "2. name": "Tencent Holdings Ltd",
+  //       "3. type": "Equity",
+  //       "4. region": "United States",
+  //       "5. marketOpen": "09:30",
+  //       "6. marketClose": "16:00",
+  //       "7. timezone": "UTC-04",
+  //       "8. currency": "USD",
+  //       "9. matchScore": "0.5185"
+  //     },
+  //     {
+  //       "1. symbol": "TCTZF",
+  //       "2. name": "Tencent Holdings Ltd",
+  //       "3. type": "Equity",
+  //       "4. region": "United States",
+  //       "5. marketOpen": "09:30",
+  //       "6. marketClose": "16:00",
+  //       "7. timezone": "UTC-04",
+  //       "8. currency": "USD",
+  //       "9. matchScore": "0.5185"
+  //     },
+  //     {
+  //       "1. symbol": "0Z4S.LON",
+  //       "2. name": "Tencent Holdings Limited",
+  //       "3. type": "Equity",
+  //       "4. region": "United Kingdom",
+  //       "5. marketOpen": "08:00",
+  //       "6. marketClose": "16:30",
+  //       "7. timezone": "UTC+01",
+  //       "8. currency": "GBX",
+  //       "9. matchScore": "0.4516"
+  //     },
+  //     {
+  //       "1. symbol": "NNN1.FRK",
+  //       "2. name": "Tencent Holdings Limited",
+  //       "3. type": "Equity",
+  //       "4. region": "Frankfurt",
+  //       "5. marketOpen": "08:00",
+  //       "6. marketClose": "20:00",
+  //       "7. timezone": "UTC+02",
+  //       "8. currency": "EUR",
+  //       "9. matchScore": "0.4516"
+  //     },
+  //     {
+  //       "1. symbol": "NNND.FRK",
+  //       "2. name": "Tencent Holdings Limited",
+  //       "3. type": "Equity",
+  //       "4. region": "Frankfurt",
+  //       "5. marketOpen": "08:00",
+  //       "6. marketClose": "20:00",
+  //       "7. timezone": "UTC+02",
+  //       "8. currency": "EUR",
+  //       "9. matchScore": "0.4516"
+  //     },
+  //     {
+  //       "1. symbol": "TME",
+  //       "2. name": "Tencent Music Entertainment Group",
+  //       "3. type": "Equity",
+  //       "4. region": "United States",
+  //       "5. marketOpen": "09:30",
+  //       "6. marketClose": "16:00",
+  //       "7. timezone": "UTC-04",
+  //       "8. currency": "USD",
+  //       "9. matchScore": "0.4000"
+  //     },
+  //     {
+  //       "1. symbol": "BA",
+  //       "2. name": "Boeing Company",
+  //       "3. type": "Equity",
+  //       "4. region": "United States",
+  //       "5. marketOpen": "09:30",
+  //       "6. marketClose": "16:00",
+  //       "7. timezone": "UTC-04",
+  //       "8. currency": "USD",
+  //       "9. matchScore": "1.0000"
+  //     },
+  //     {
+  //       "1. symbol": "BAA",
+  //       "2. name": "Banro Corporation USA",
+  //       "3. type": "Equity",
+  //       "4. region": "United States",
+  //       "5. marketOpen": "09:30",
+  //       "6. marketClose": "16:00",
+  //       "7. timezone": "UTC-04",
+  //       "8. currency": "USD",
+  //       "9. matchScore": "0.8000"
+  //     },
+  //     {
+  //       "1. symbol": "BAB",
+  //       "2. name": "Invesco Taxable Municipal Bond ETF",
+  //       "3. type": "ETF",
+  //       "4. region": "United States",
+  //       "5. marketOpen": "09:30",
+  //       "6. marketClose": "16:00",
+  //       "7. timezone": "UTC-04",
+  //       "8. currency": "USD",
+  //       "9. matchScore": "0.8000"
+  //     },
+  //     {
+  //       "1. symbol": "BA.LON",
+  //       "2. name": "BAE Systems plc",
+  //       "3. type": "Equity",
+  //       "4. region": "United Kingdom",
+  //       "5. marketOpen": "08:00",
+  //       "6. marketClose": "16:30",
+  //       "7. timezone": "UTC+01",
+  //       "8. currency": "GBX",
+  //       "9. matchScore": "0.6667"
+  //     },
+  //     {
+  //       "1. symbol": "BABA",
+  //       "2. name": "Alibaba Group Holding Ltd",
+  //       "3. type": "Equity",
+  //       "4. region": "United States",
+  //       "5. marketOpen": "09:30",
+  //       "6. marketClose": "16:00",
+  //       "7. timezone": "UTC-04",
+  //       "8. currency": "USD",
+  //       "9. matchScore": "0.6667"
+  //     },
+  //     {
+  //       "1. symbol": "BABB",
+  //       "2. name": "BAB Inc",
+  //       "3. type": "Equity",
+  //       "4. region": "United States",
+  //       "5. marketOpen": "09:30",
+  //       "6. marketClose": "16:00",
+  //       "7. timezone": "UTC-04",
+  //       "8. currency": "USD",
+  //       "9. matchScore": "0.6667"
+  //     },
+  //     {
+  //       "1. symbol": "BA3.FRK",
+  //       "2. name": "Brooks Automation",
+  //       "3. type": "Equity",
+  //       "4. region": "Frankfurt",
+  //       "5. marketOpen": "08:00",
+  //       "6. marketClose": "20:00",
+  //       "7. timezone": "UTC+02",
+  //       "8. currency": "EUR",
+  //       "9. matchScore": "0.5714"
+  //     },
+  //     {
+  //       "1. symbol": "BAAPX",
+  //       "2. name": "BlackRock Aggressive GwthPrprdPtfInvstrA",
+  //       "3. type": "Mutual Fund",
+  //       "4. region": "United States",
+  //       "5. marketOpen": "09:30",
+  //       "6. marketClose": "16:00",
+  //       "7. timezone": "UTC-04",
+  //       "8. currency": "USD",
+  //       "9. matchScore": "0.5714"
+  //     },
+  //     {
+  //       "1. symbol": "BABAF",
+  //       "2. name": "Alibaba Group Holding Ltd",
+  //       "3. type": "Equity",
+  //       "4. region": "United States",
+  //       "5. marketOpen": "09:30",
+  //       "6. marketClose": "16:00",
+  //       "7. timezone": "UTC-04",
+  //       "8. currency": "USD",
+  //       "9. matchScore": "0.5714"
+  //     },
+  //     {
+  //       "1. symbol": "BABA34.SAO",
+  //       "2. name": "BABA34",
+  //       "3. type": "Equity",
+  //       "4. region": "Brazil/Sao Paolo",
+  //       "5. marketOpen": "10:00",
+  //       "6. marketClose": "17:30",
+  //       "7. timezone": "UTC-03",
+  //       "8. currency": "BRL",
+  //       "9. matchScore": "0.5000"
+  //     },
+  //     {
+  //       "1. symbol": "SAIC",
+  //       "2. name": "Science Applications International Corp",
+  //       "3. type": "Equity",
+  //       "4. region": "United States",
+  //       "5. marketOpen": "09:30",
+  //       "6. marketClose": "16:00",
+  //       "7. timezone": "UTC-04",
+  //       "8. currency": "USD",
+  //       "9. matchScore": "1.0000"
+  //     },
+  //     {
+  //       "1. symbol": "SAICX",
+  //       "2. name": "JPMORGAN SMARTALLOCATION INCOME FUND CLASS C",
+  //       "3. type": "Mutual Fund",
+  //       "4. region": "United States",
+  //       "5. marketOpen": "09:30",
+  //       "6. marketClose": "16:00",
+  //       "7. timezone": "UTC-04",
+  //       "8. currency": "USD",
+  //       "9. matchScore": "0.8889"
+  //     },
+  //     {
+  //       "1. symbol": "SAIC11B.SAO",
+  //       "2. name": "Fundo Investimento Imobiliario FII",
+  //       "3. type": "ETF",
+  //       "4. region": "Brazil/Sao Paolo",
+  //       "5. marketOpen": "10:00",
+  //       "6. marketClose": "17:30",
+  //       "7. timezone": "UTC-03",
+  //       "8. currency": "BRL",
+  //       "9. matchScore": "0.5714"
+  //     },
+  //     {
+  //       "1. symbol": "600104.SHH",
+  //       "2. name": "SAIC Motor Corporation Ltd",
+  //       "3. type": "Equity",
+  //       "4. region": "Shanghai",
+  //       "5. marketOpen": "09:30",
+  //       "6. marketClose": "15:00",
+  //       "7. timezone": "UTC+08",
+  //       "8. currency": "CNY",
+  //       "9. matchScore": "0.2667"
+  //     },
+  //     {
+  //       "1. symbol": "IBM",
+  //       "2. name": "International Business Machines Corporation",
+  //       "3. type": "Equity",
+  //       "4. region": "USA",
+  //       "5. marketOpen": "09:30",
+  //       "6. marketClose": "15:00",
+  //       "7. timezone": "UTC+08",
+  //       "8. currency": "USD",
+  //       "9. matchScore": "0.26671"
+  //     },
+  //     {
+  //       "1. symbol": "FK1",
+  //       "2. name": "Fake Company 1",
+  //       "3. type": "Equity",
+  //       "4. region": "USA",
+  //       "5. marketOpen": "09:30",
+  //       "6. marketClose": "15:00",
+  //       "7. timezone": "UTC+08",
+  //       "8. currency": "USD",
+  //       "9. matchScore": "0.26671"
+  //     },
+  //     {
+  //       "1. symbol": "FK2",
+  //       "2. name": "Fake Company 2",
+  //       "3. type": "Equity",
+  //       "4. region": "USA",
+  //       "5. marketOpen": "09:30",
+  //       "6. marketClose": "15:00",
+  //       "7. timezone": "UTC+08",
+  //       "8. currency": "USD",
+  //       "9. matchScore": "0.26671"
+  //     }
+  // ]
 
 
 

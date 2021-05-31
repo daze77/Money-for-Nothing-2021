@@ -456,7 +456,7 @@ function renderChart(data){
       data = {
         labels: labels,
         datasets: [{
-          label: 'My First dataset',
+          label: 'Monthly Returns',
           backgroundColor: 'rgb(255, 99, 132)',
           borderColor: 'rgb(255, 99, 132)',
           data: data,

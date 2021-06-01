@@ -1,24 +1,3 @@
-// Variables for API Objects
-// var stockList
-// var compInfo
-// var symbolInfo
-// var tempName
-
-// Variables for Stocks and Year High/Lows
-var closeingPrice
-var yearHigh
-var yearLow
-var isoDatefix
-
-// Variables for Company Card
-var sector
-var exchange
-var qEarningsGrowthYOY
-var qRevenueGrowthYOY
-var qRevenue
-var compName
-
-
 // NEWS API
 var news
 var abstract
@@ -28,32 +7,33 @@ var image
 var caption
 var hotTitle
 
-
 // Infor for Local Storage and Watch List
 var lswl
 var lsCompCheck
 var newCompany
 var stockSymb
 
-// stock search varibles
+// stock search API varibles
 let companySearch
-
 let stockSymbolSearch = []
 let stockSymbolSearchResults = []
 
-
-
-
+// API variables
 let corpQuote = []
 let compDetails = []
 let basicFinancials = []
 let candleInfo = []
 
 
+
+const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const months = ["January","February","March","April","May","June","July", "August","September","October","November","December"];
+
+
 // check local storage for entry
 function LS() {
   lswl = localStorage.lswl ? JSON.parse(localStorage.lswl) : []
-  console.log(lswl)
+  // console.log(lswl)
 
   // if local storage has an entry populate watchlist
   watchlist()
@@ -68,27 +48,27 @@ function stockSearch(){
     // console.log(`we fount it `)
     // console.log(companySearch.length)
     // console.log(Boolean(stockSymbolSearch.find(e => (e!==`${companySearch}`))))
-    alphaStockSearch(companySearch)
+    stockDetailAPI(companySearch)
 
   }else if (stockSymbolSearchResults.find(e=>e.displaySymbol===companySearch)) {
     // console.log(companySearch)
-    alphaStockSearch(companySearch)
+    stockDetailAPI(companySearch)
 
   }  else {console.log(`keep searching`)
   
-    getAlpha(companySearch)}
+  stockSymbolSearchAPI(companySearch)}
 
 }
 
-
-async function getAlpha(autoQuery){
-  console.log(autoQuery)
+// API to search stock symbols available - search while you type
+async function stockSymbolSearchAPI(autoQuery){
+  // console.log(autoQuery)
 
   let stockSymbols = await fetch ('https://finnhub.io/api/v1/stock/symbol?exchange=US&token=c2m4iqqad3idnodd7tdg').then(r=>r.json())
   stockSymbolSearchResults = stockSymbols.filter(e => e.description.includes(`${autoQuery}`) || e.displaySymbol.includes(`${autoQuery}`))
-  console.log(stockSymbolSearchResults)
+  // console.log(stockSymbolSearchResults)
 
-  console.log(stockSymbols)
+  // console.log(stockSymbols)
 
   document.querySelector('#datalistOptions').innerHTML = ""
   stockSymbolSearch = []
@@ -99,19 +79,19 @@ async function getAlpha(autoQuery){
     stockSymbolSearch.push({symbol: `${stock["displaySymbol"]}`, name: `${stock["description"]}`})
   })
 
-  console.log(`symbol array values`, stockSymbolSearch)  
+  // console.log(`symbol array values`, stockSymbolSearch)  
 
 }
 
+// API to pull details about stock - various APIs used as this is a free tier service
+async function stockDetailAPI(symbolSelected){
 
-async function alphaStockSearch(symbolSelected){
-
-  console.log(`this is the passed symbol`, symbolSelected)
+  // console.log(`this is the passed symbol`, symbolSelected)
 
     let todaysDate = Math.floor(Date.now()/1000)
     let aYearAgo = Math.floor((new Date().setDate(new Date().getDate()-365))/1000)
-    console.log(`todays date is ${todaysDate} as a number and in human text ${new Date(todaysDate*1000)}`)
-    console.log(`365 days ago was ${aYearAgo} as a number and in human txt ${new Date(aYearAgo*1000)}`)
+    // console.log(`todays date is ${todaysDate} as a number and in human text ${new Date(todaysDate*1000)}`)
+    // console.log(`365 days ago was ${aYearAgo} as a number and in human txt ${new Date(aYearAgo*1000)}`)
 
 
     compDetails  = await fetch(`https://finnhub.io/api/v1/stock/profile2?symbol=${symbolSelected}&token=c2m4iqqad3idnodd7tdg`).then(r => r.json())
@@ -120,22 +100,20 @@ async function alphaStockSearch(symbolSelected){
     candleInfo = await fetch(`https://finnhub.io/api/v1/stock/candle?symbol=${symbolSelected}&resolution=M&from=${aYearAgo}&to=${todaysDate}&token=c2m4iqqad3idnodd7tdg`).then(r=>r.json())
       
     let timeStampHumanDate = new Date(corpQuote.t*1000)
-    var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-    var months = ["January","February","March","April","May","June","July", "August","September","October","November","December"];
- 
 
+ 
     let timeStampMonth = months[timeStampHumanDate.getMonth()]
     let timeStampDay = days[timeStampHumanDate.getDay()]
     let timeStampDate = timeStampHumanDate.getDate()
     let timeStampYear = timeStampHumanDate.getFullYear()
 
 
-    console.log(`this is alpha corpQuote`, corpQuote)
-    console.log(`this is alpha CompDetails`, compDetails)
-    console.log(`this is alpha basicFinancials`, basicFinancials)
-    console.log(`this is alpha candleInfo`, candleInfo)
+    // console.log(`this is alpha corpQuote`, corpQuote)
+    // console.log(`this is alpha CompDetails`, compDetails)
+    // console.log(`this is alpha basicFinancials`, basicFinancials)
+    // console.log(`this is alpha candleInfo`, candleInfo)
 
-
+    // fill the company card with details
     document.querySelector('#sharePrice').innerHTML = `Share Price (USD):  <span>$ ${corpQuote.c}</span>`
     document.querySelector('#dateNow').innerHTML = `<small>As of:  ${timeStampDay} ${timeStampMonth} ${timeStampDate}, ${timeStampYear}</small>`
 
@@ -145,12 +123,13 @@ async function alphaStockSearch(symbolSelected){
     document.querySelector('#allEarnings').innerHTML = `Quarter Earnings Growth:  <span id="cardQRevenue" >${(basicFinancials.metric["revenueGrowthQuarterlyYoy"]).toFixed(2)}%</span>`
     document.querySelector('#allRevenue').innerHTML = `Quarter Rev Growth:  <span id="cardQEarnings" >${(basicFinancials.metric["epsGrowthQuarterlyYoy"]).toFixed(2)}%</span>`
 
-
     document.querySelector('#companyName').innerHTML = `<img style="width:50px" src=${compDetails.logo} />  ${compDetails["name"]}`
 
     document.querySelector('#cardheadQuarters').innerHTML = `Headquarters: ${compDetails["country"]}`
     document.querySelector('#cardType').innerHTML = `Sector:  ${compDetails["finnhubIndustry"]}`
 
+
+    // flag color of quarterlies - negative value is red
     if (basicFinancials.metric["revenueGrowthQuarterlyYoy"] < 0) { document.querySelector("#cardQRevenue").style.color = "red" }
     if (basicFinancials.metric["epsGrowthQuarterlyYoy"] < 0) { document.querySelector("#cardQEarnings").style.color = "red" }
 
@@ -158,26 +137,19 @@ async function alphaStockSearch(symbolSelected){
     companySearch = symbolSelected
 
 
-    // candleInfo Timestamps to Months Conversion
+    // candleInfo Timestamps to Months Conversion - for chart rendering
     let candleInfoMonths = []
     candleInfo.t.forEach(time => {
-      
       candleInfoDates = months[(new Date(time*1000)).getMonth()]
-      console.log(`this is the canle info time stamp to get month function`, candleInfoDates)
       candleInfoMonths.push(candleInfoDates)
-      console.log(candleInfoMonths)
 
     })
-
-
-
-
     checkLS(symbolSelected)
     renderChart(candleInfo.c, candleInfoMonths)
-
-
-
 }
+
+
+
 //------------------------------------------------------------------------------------------------------------------------------------------
 //START NEWS API
 // get news API
@@ -228,7 +200,7 @@ function changeNewsImage(){
 
 
 
-console.log(lswl)
+// console.log(lswl)
 
 // Scan local storage
 function checkLS(ssymbol) {
@@ -242,13 +214,13 @@ function checkLS(ssymbol) {
 // Watchlist button trigger (add or remove from list)
 function watchListBtn(event) {
   
-  console.log("Watch List button pressed")
+  // console.log("Watch List button pressed")
   var wlbtnresults = document.querySelector('.wlbtn').innerText
   if (wlbtnresults === "+ to Watchlist") {
     addLocalStorage()
 
   } else {
-    console.log("no go")
+    // console.log("no go")
     removeLocalStorage()
 
   }
@@ -257,7 +229,7 @@ function watchListBtn(event) {
 
 // save items to local storage
 function addLocalStorage() {
-  console.log("add Local Storage function started")
+  // console.log("add Local Storage function started")
   newCompany = {
     name: `${compDetails["name"]}`,
     ticker: `${companySearch}`,
@@ -279,11 +251,11 @@ function removeLocalStorage() {
 }
 
 // Add to  Watchlist
-function watchlist(removedstock) {
+function watchlist() {
   document.querySelector('.list-group').innerHTML = ""
   var lswlLength = lswl.length
-  console.log(lswl)
-  console.log(lswlLength)
+  // console.log(lswl)
+  // console.log(lswlLength)
 
   for (i = 0; i < lswlLength; i++) {
     var tick = lswl[i].ticker
@@ -293,15 +265,13 @@ function watchlist(removedstock) {
   }
 }
 
-//when the watchlist button is pushed, pass the company name via the search function trigger
+// when the watchlist button is pushed, pass the company name via the search function trigger
 function wlBtnSearch(tick) {
-  console.log(tick)
-  alphaStockSearch(tick)
+  // console.log(tick)
+  stockDetailAPI(tick)
   checkLS(tick)
 }
-LS()
-getNews()
-checkLS()
+
 
 // chart rendering function
 function renderChart(data, months){
@@ -330,3 +300,9 @@ function renderChart(data, months){
     config))
 
 }
+
+
+
+LS()
+getNews()
+checkLS()

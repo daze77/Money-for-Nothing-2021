@@ -364,7 +364,7 @@ async function alphaStockSearch(symbolSelected){
   console.log(`this is the passed symbol`, symbolSelected)
 
     let todaysDate = Math.floor(Date.now()/1000)
-    let aYearAgo = Math.floor((new Date().setDate(new Date().getDate()-360))/1000)
+    let aYearAgo = Math.floor((new Date().setDate(new Date().getDate()-365))/1000)
     console.log(`todays date is ${todaysDate} as a number and in human text ${new Date(todaysDate*1000)}`)
     console.log(`365 days ago was ${aYearAgo} as a number and in human txt ${new Date(aYearAgo*1000)}`)
 
@@ -444,7 +444,7 @@ function renderChart(data, months){
   data = {
     labels: labels,
     datasets: [{
-      label: 'Monthly Returns',
+      label: 'Monthly Closing Prices',
       backgroundColor: 'rgb(84,10,154)',
       borderColor: 'rgb(84,10,154)',
       data: data,
@@ -468,6 +468,9 @@ function renderChart(data, months){
     config)) : (myChart = new Chart(
     document.getElementById('myChart'),
     config))
+
+
+    
   
 }
 

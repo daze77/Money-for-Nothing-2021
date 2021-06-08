@@ -33,7 +33,7 @@
         <div class="row " id="topHalf">
 
             <div class="col-md-4 d-flex align-items-stretch ">
-                <div class="row">
+                <div class="row ">
                     <div class="row mb-0">
                         <div class="col">
                             <div class="watchlistCard" >
@@ -53,13 +53,13 @@
                                 NYT Business News
                                 </div>
                                 <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
-                                    <div class="carousel-indicators">
+                                    <!-- <div class="carousel-indicators">
                                         <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                                         <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
                                         <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
                                         <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3" aria-label="Slide 4"></button>
                                         <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="4" aria-label="Slide 5"></button>
-                                    </div>
+                                    </div> -->
                                     <div class="carousel-inner">
                                         <div class="carousel-item active">
                                             <img src="https://via.placeholder.com/150" id="nwsImg0" class="d-block w-100" alt="story image">
@@ -97,14 +97,14 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                                    <a class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                         <span class="visually-hidden">Previous</span>
-                                    </button>
-                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                                    </a>
+                                    <a class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
                                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                         <span class="visually-hidden">Next</span>
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -166,6 +166,47 @@
                 </div>     
             </div>
         </div>
+        <div class="row">
+            <div class="col tickercol">
+                    <!--ticker widget script-->
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>
+                    {
+                    "symbols"; [
+                    {
+                        "proName": "FOREXCOM:SPXUSD",
+                        "title": "S&P 500"
+                    },
+                    {
+                        "proName": "FOREXCOM:NSXUSD",
+                        "title": "Nasdaq 100"
+                    },
+                    {
+                        "proName": "FX_IDC:EURUSD",
+                        "title": "EUR/USD"
+                    },
+                    {
+                        "proName": "BITSTAMP:BTCUSD",
+                        "title": "BTC/USD"
+                    },
+                    {
+                        "proName": "BITSTAMP:ETHUSD",
+                        "title": "ETH/USD"
+                    }
+                    ],
+                    "colorTheme"; "light",
+                    "isTransparent"; false,
+                    "showSymbolLogo"; true,
+                    "locale"; "en"
+                }
+                </script>
+                <!-- <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"id="tradingWidget">
+                    </div>
+  
+           
+                </div> -->
+            </div>
+        </div>
  
         <!-- <div class="userCard" id="newsMain">
             <h3 id="newsSection">New York Times Business News</h3>
@@ -224,56 +265,21 @@
         </div>
 
         <!-TradingView Widget BEGIN -->
-        <div class="tradingview-widget-container">
-            <div class="tradingview-widget-container__widget"id="tradingWidget">
-            </div>
-            <!-- <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com" rel="noopener" target="_blank"><span class="blue-text">Quotes</span></a> by TradingView
-            </div> -->
-   
-        </div>
-</div>
+
+    </div>
   <!-- TradingView Widget END -->
      -->
     <!--footer-->
-    <!-- <footer class="fixed-bottom mt-auto bg-light text-center ">
+    <footer class="fixed-bottom mt-auto bg-light text-center ">
         <span class="text-center">
             Copyright 2021
         </span>
-    </footer> -->
+    </footer>
 
-    <!-- <script src="script.js"></script> -->
     <script src="script2.js"></script>
-    <!--ticker widget script-->
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>
-        {
-        "symbols"; [
-          {
-            "proName": "FOREXCOM:SPXUSD",
-            "title": "S&P 500"
-          },
-          {
-            "proName": "FOREXCOM:NSXUSD",
-            "title": "Nasdaq 100"
-          },
-          {
-            "proName": "FX_IDC:EURUSD",
-            "title": "EUR/USD"
-          },
-          {
-            "proName": "BITSTAMP:BTCUSD",
-            "title": "BTC/USD"
-          },
-          {
-            "proName": "BITSTAMP:ETHUSD",
-            "title": "ETH/USD"
-          }
-        ],
-        "colorTheme"; "light",
-        "isTransparent"; false,
-        "showSymbolLogo"; true,
-        "locale"; "en"
-      }
-        </script>
+
+
+
 
 
 

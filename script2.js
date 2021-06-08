@@ -65,10 +65,21 @@ async function stockSymbolSearchAPI(autoQuery){
   // console.log(autoQuery)
 
   let stockSymbols = await fetch ('https://finnhub.io/api/v1/stock/symbol?exchange=US&token=c2m4iqqad3idnodd7tdg').then(r=>r.json())
-  stockSymbolSearchResults = stockSymbols.filter(e => e.description.includes(`${autoQuery}`) || e.displaySymbol.includes(`${autoQuery}`))
+  stockSymbolSearchResults = stockSymbols.filter(e => (e.description.includes(`${autoQuery}`) || e.displaySymbol.includes(`${autoQuery}`)) && (e.type === "Common Stock") 
+  && (e.mic === "XNYS"
+  || e.mic === "XASE"
+  || e.mic === "BATS"
+  || e.mic === "ARCX"
+  || e.mic === "XNMS"
+  || e.mic === "XNCM"
+  || e.mic === "XNGS"
+  || e.mic === "IEXG"
+  || e.mic === "XNAS"
+  )
+  )
   // console.log(stockSymbolSearchResults)
 
-  // console.log(stockSymbols)
+  console.log(stockSymbols)
 
   document.querySelector('#datalistOptions').innerHTML = ""
   stockSymbolSearch = []
@@ -76,7 +87,7 @@ async function stockSymbolSearchAPI(autoQuery){
   stockSymbolSearchResults.slice(0,11).forEach(stock =>  {
     document.querySelector('#datalistOptions').innerHTML +=
     ` <option value=${stock["displaySymbol"]} > ${stock["description"]}</option>`
-    stockSymbolSearch.push({symbol: `${stock["displaySymbol"]}`, name: `${stock["description"]}`})
+    stockSymbolSearch.push({symbol: `${stock["displaySymbol"]}`, name: `${stock["description"]}`, mic: `${stock["mic"]}`})
   })
 
   // console.log(`symbol array values`, stockSymbolSearch)  
@@ -108,9 +119,9 @@ async function stockDetailAPI(symbolSelected){
     let timeStampYear = timeStampHumanDate.getFullYear()
 
 
-    // console.log(`this is alpha corpQuote`, corpQuote)
-    // console.log(`this is alpha CompDetails`, compDetails)
-    // console.log(`this is alpha basicFinancials`, basicFinancials)
+    console.log(`this is alpha corpQuote`, corpQuote)
+    console.log(`this is alpha CompDetails`, compDetails)
+    console.log(`this is alpha basicFinancials`, basicFinancials)
     // console.log(`this is alpha candleInfo`, candleInfo)
 
     // fill the company card with details

@@ -168,9 +168,14 @@ h5 {
     max-height: 380px;
 }
 
-#tradingWidget{
+/* #tradingWidget{
 
     margin-bottom: 40px;
     position: relative;
     bottom: -100px;
+} */
+
+
+.tickercol{
+    margin-bottom: 100px;
 }

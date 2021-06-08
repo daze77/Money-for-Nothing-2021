@@ -261,7 +261,7 @@ function watchlist() {
     var tick = lswl[i].ticker
     var nam = lswl[i].name
 
-    document.querySelector('.list-group').innerHTML += `<li class="wlBtn"> <button type="button" class="btn btn-outline-light" onClick="wlBtnSearch('${tick}')"><span id="stkName">${nam}</span> - <span id = "stkSymb">${tick}</span></button>    </li>`  
+    document.querySelector('.list-group').innerHTML += `<li class="wlBtn "> <button type="button" class="btn btn-outline-light" onClick="wlBtnSearch('${tick}')"><span id="stkName">${nam}</span> - <span id = "stkSymb">${tick}</span></button>    </li>`  
   }
 }
 

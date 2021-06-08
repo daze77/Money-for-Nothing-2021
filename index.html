@@ -12,6 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+
   
 
 
@@ -24,26 +25,26 @@
     </div>
     <div class="container">
         <div class=" testSearchDiv input-group ">
-            <input type="text" onKeyUp="testSearch(event)"  list="datalistOptions" class="form-control" id="testinput" placeholder="Type to search for your stock..." aria-label="search" aria-describedby="search">
+            <input type="text" onKeyUp="stockSearch(event)"  list="datalistOptions" class="form-control" id="stockSearch" placeholder="Type to search for your stock..." aria-label="search" aria-describedby="search">
             <datalist id="datalistOptions">
                 <h5 value="Stock 0"></h5>
             </datalist>
         </div>  
         <div class="row " id="topHalf">
 
-            <div class="col-md-4 ">
-                <div class="userCard" id="watchList">
-                    <div class="card-header" id="watchlistheader">
+            <div class="col-md-4 d-flex align-items-stretch ">
+                <div class="userCard" >
+                    <div class="card-header " id="watchlistheader">
                         Watchlist
                     </div>
-                    <ul class="list-group">
+                    <ul class="list-group overflow-auto">
 
                     </ul>
                 </div>
             </div>
 
-            <div class="col-md-8 " >
-                <div class="userCard" id="companyInfo">
+            <div class="col-md-8 d-flex align-items-stretch" >
+                <div class="userCard">
                     <h3 id="companyName"><img class="float-start" id="companyLogo"/>Company Name</h3>
                     <hr>
                     <div class=" p-2 card-body">
@@ -86,7 +87,7 @@
                             </div>
                                    
                         </div>
-                        <div class="row">
+                        <div class="row pt-5">
                             <div class="col" id="addRemoveBtn">
                                 <button onclick="watchListBtn(event)" type="button"
                                 class="wlbtn btn btn-success float-end">+ to Watchlist</button>
@@ -114,7 +115,7 @@
             <div class="row row-cols-1 row-cols-md-3 g-1 pt-1">
                 <div class="col">
                     <div class="card h-100 newsCardFormat " >
-                        <img src="https://via.placeholder.com/150" id="nwsImg0"class="card-img-top" alt="story image">
+                        <img src="https://via.placeholder.com/150" style="height: 250px; width: auto" id="nwsImg0"class="card-img-top" alt="story image">
                         <div class="card-body" id="news0">
                             <h5 class="card-title pb-3" id="newsstory0">Card title</h5>
                             <p class="card-text" id="caption0">This card has supporting text below as a natural lead-in to additional content.</p>
@@ -123,7 +124,7 @@
                 </div>
                 <div class="col">
                     <div class="card h-100 newsCardFormat" >
-                        <img src="https://via.placeholder.com/150" id="nwsImg1"class="card-img-top" alt="story image">
+                        <img src="https://via.placeholder.com/150" style="height: 250px; width: auto" id="nwsImg1"class="card-img-top" alt="story image">
                         <div class="card-body" id="news1">
                             <h5 class="card-title pb-3" id="newsstory1">Card title</h5>
                             <p class="card-text" id="caption1">This card has supporting text below as a natural lead-in to additional content.</p>
@@ -132,7 +133,7 @@
                 </div>
                 <div class="col">
                     <div class="card h-100 newsCardFormat" >
-                        <img src="https://via.placeholder.com/150" id="nwsImg2"class="card-img-top" alt="story image">
+                        <img src="https://via.placeholder.com/150" style="height: 250px; width: auto" id="nwsImg2"class="card-img-top" alt="story image">
                         <div class="card-body" id="news2">
                             <h5 class="card-title pb-3" id="newsstory2">Card title</h5>
                             <p class="card-text" id="caption2">This card has supporting text below as a natural lead-in to additional content.</p>

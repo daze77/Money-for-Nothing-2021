@@ -62,12 +62,17 @@ min-width: 100%;
 .carousel {
     min-height: 150px
 }
-.carousel-caption {
-    color:white;
-    position: absolute;
-    bottom:20px;
 
+.card-text {
+    font-weight: bold;
+    color:lightgoldenrodyellow;
 }
+h6 {
+    font-weight:bold;
+    color: darkslateblue;
+    font-size: 14pt;
+}
+
 
 #newsMain{
 

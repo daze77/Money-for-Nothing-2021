@@ -167,7 +167,7 @@ async function stockDetailAPI(symbolSelected){
 async function getNews() {
   news = await fetch('https://api.nytimes.com/svc/topstories/v2/business.json?api-key=IlIdSVUvpiF5PABbTeerA3kRncTqyqAo').then(r => r.json())
   console.log(news)
-  for (i = 0; i < 3; i++) {
+  for (i = 0; i < 6; i++) {
 
     title = news.results[i].title
     console.log(title)
@@ -186,30 +186,17 @@ async function getNews() {
 // Displays news info in a card on screen
 function changeNewsInfo() {
   // Displays title of News
-  document.querySelector(`#newsstory0`).innerHTML = news.results[0].title.link(news.results[0].url)
-  document.querySelector(`#newsstory1`).innerHTML = news.results[1].title.link(news.results[1].url)
-  document.querySelector(`#newsstory2`).innerHTML = news.results[2].title.link(news.results[2].url)
-  document.querySelector(`#newsstory3`).innerHTML = news.results[3].title.link(news.results[2].url)
-  document.querySelector(`#newsstory4`).innerHTML = news.results[4].title.link(news.results[2].url)
+  document.querySelector(`#newsstory${i}`).innerHTML = news.results[i].title.link(news.results[i].url)
 }
 
 function changeNewsImage(){
   //Displays image that accompanies article
-  document.querySelector(`#nwsImg0`).src = news.results[0].multimedia[0].url
-  document.querySelector(`#nwsImg1`).src = news.results[1].multimedia[0].url
-  document.querySelector(`#nwsImg2`).src = news.results[2].multimedia[0].url
-  document.querySelector(`#nwsImg3`).src = news.results[3].multimedia[0].url
-  document.querySelector(`#nwsImg4`).src = news.results[4].multimedia[0].url
+  document.querySelector(`#nwsImg${i}`).src = news.results[i].multimedia[0].url
 }
 
   function changeNewsCaption(){
   //Displays caption that accompanies article
-  document.querySelector(`#caption0`).innerHTML = news.results[0].multimedia[0].caption
-  document.querySelector(`#caption1`).innerHTML = news.results[1].multimedia[0].caption
-  document.querySelector(`#caption2`).innerHTML = news.results[2].multimedia[0].caption
-  document.querySelector(`#caption3`).innerHTML = news.results[3].multimedia[0].caption
-  document.querySelector(`#caption4`).innerHTML = news.results[4].multimedia[0].caption
-  
+  document.querySelector(`#caption${i}`).innerHTML = news.results[i].multimedia[0].caption  
 }
 //END NEWS API
 //----------------------------------------------------------------------------------------------------

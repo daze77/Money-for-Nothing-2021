@@ -184,3 +184,11 @@ h5 {
 .tickercol{
     margin-bottom: 100px;
 }
+
+.carousel-inner img{
+    object-fit: cover;
+    object-position: center;
+    height: 25vh;
+    overflow: hidden;
+
+}

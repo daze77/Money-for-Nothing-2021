@@ -167,7 +167,7 @@ async function stockDetailAPI(symbolSelected){
 async function getNews() {
   news = await fetch('https://api.nytimes.com/svc/topstories/v2/business.json?api-key=IlIdSVUvpiF5PABbTeerA3kRncTqyqAo').then(r => r.json())
   console.log(news)
-  for (i = 0; i < 6; i++) {
+  for (i = 0; i < 5; i++) {
 
     title = news.results[i].title
     console.log(title)
@@ -179,6 +179,7 @@ async function getNews() {
     changeNewsInfo()
     changeNewsImage()
     changeNewsCaption()
+    
 
   }
 }

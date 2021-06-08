@@ -28,12 +28,13 @@ In the future, we would consider adding the following features to the finance tr
 * More precise searches and better use of API's.
 
 ## Screen shot of our site as well as a zoom image of the team: 
-![Grand](https://github.com/catherinebshaw/Money-for-Nothing/blob/main/Assets/snipssss%20(1).PNG)
+![Grand](./Assets/SNIP2.0.png)
+
 
 
 
 
 ## Link:
-[MFN](https://catherinebshaw.github.io/Money-for-Nothing/)
+[MFN-2.0](https://daze77.github.io/Money-for-Nothing-2021/)
 
 

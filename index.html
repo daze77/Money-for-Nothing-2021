@@ -32,7 +32,7 @@
         <div class="row " id="topHalf">
 
             <div class="col-md-4 ">
-                <div class="userCard" >
+                <div class="userCard" id="watchList">
                     <div class="card-header" id="watchlistheader">
                         Watchlist
                     </div>
@@ -43,21 +43,23 @@
             </div>
 
             <div class="col-md-8 " >
-                <div class="userCard">
+                <div class="userCard" id="companyInfo">
                     <h3 id="companyName"><img class="float-start" id="companyLogo"/>Company Name</h3>
                     <hr>
                     <div class=" p-2 card-body">
                         <div class="row">
-                            <div class="col">
+                            <div class="col-md-4">
                                 <h6> <small class="card-text" id="cardheadQuarters">Headquarters: </small></h6>
-                                 <h6><small class="mb-3" id="cardType">Type: </small></h6>
-                             </div>
-                             <div class="col">
-                                <small class="card-text float-end" id="dateNow">As of: </small>
+                            </div>
+                            <div class="col-md-4">  
+                                <h6><small class="mb-3" id="cardType">Type: </small></h6>
+                            </div>
+                            <div class="col-md-4">
+                                <h6><small class="card-text float-end" id="dateNow">As of: </small></h6>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-5 my-4 cardData">
+                            <div class="col-md-5 my-1 cardData">
                                 <ul>
                                     <li id="sharePrice">Share Price (USD):</li>
                                     <li id="yearHigh">52 Week High: </li>
@@ -66,7 +68,7 @@
                                 </ul>
 
                             </div>
-                            <div class="col-md-7 my-4 cardData">
+                            <div class="col-md-7 my-1 cardData">
                                 <ul>
                                     <li id="YOY">Year over Year</li>
                                     <li id="allEarnings">Quarter Earnings Growth:  <span
@@ -80,7 +82,7 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <canvas id="myChart" class="w-100" style="border:1px solid white">This is just a test to see how this works</canvas>
+                                <canvas id="myChart" class="w-100" style="border: 1cm solid white;">This is just a test to see how this works</canvas>
                             </div>
                                    
                         </div>

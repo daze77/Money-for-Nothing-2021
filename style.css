@@ -195,7 +195,7 @@ h5 {
 .carousel-inner img{
     object-fit: cover;
     object-position: center;
-    height: 25vh;
+    height: 20vh;
     overflow: hidden;
 
 }

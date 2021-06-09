@@ -66,10 +66,17 @@ min-width: 100%;
     min-height: 150px
 }
 
-.card-text {
+
+
+
+.carousel-caption .card-text {
     font-weight: bold;
     color:lightgoldenrodyellow;
+
 }
+
+
+
 h6 {
     font-weight:bold;
     color: darkslateblue;

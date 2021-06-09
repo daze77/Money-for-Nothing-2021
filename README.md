@@ -28,7 +28,7 @@ In the future, we would consider adding the following features to the finance tr
 * More precise searches and better use of API's.
 
 ## Screen shot of our site as well as a zoom image of the team: 
-![Grand](./Assets/SNIP2.0(1).png)
+![Grand](./Assets/SNIP2.0.png)
 
 
 

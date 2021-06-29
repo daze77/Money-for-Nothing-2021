@@ -179,6 +179,7 @@ async function getNews() {
     changeNewsInfo()
     changeNewsImage()
     changeNewsCaption()
+    
 
   }
 }

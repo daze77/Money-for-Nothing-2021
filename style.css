@@ -14,6 +14,8 @@
     
 }
 
+
+
 h1 {
     color: white;
 }
@@ -46,6 +48,7 @@ box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.04
 background: white;
 border-radius: 5px;
 min-height: 450px;
+height:450px;
 min-width: 100%;
 }
 .carouselCard {
@@ -63,10 +66,17 @@ min-width: 100%;
     min-height: 150px
 }
 
-.card-text {
+
+
+
+.carousel-caption .card-text {
     font-weight: bold;
     color:lightgoldenrodyellow;
+
 }
+
+
+
 h6 {
     font-weight:bold;
     color: darkslateblue;
@@ -166,13 +176,26 @@ h5 {
 
 }
 
-.userCard > ul {
-    max-height: 650px;
+.watchlistCard > ul {
+    max-height: 380px;
 }
 
-#tradingWidget{
+/* #tradingWidget{
 
     margin-bottom: 40px;
     position: relative;
     bottom: -100px;
+} */
+
+
+.tickercol{
+    margin-bottom: 100px;
+}
+
+.carousel-inner img{
+    object-fit: cover;
+    object-position: center;
+    height: 20vh;
+    overflow: hidden;
+
 }

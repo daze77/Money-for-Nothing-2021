@@ -44,13 +44,14 @@ function stockSearch(){
   companySearch = document.querySelector('#stockSearch').value.toUpperCase()
   // console.log(companySearch)
 
+
   if((companySearch.length > 2) && (stockSymbolSearch.find(e => (e===`${companySearch}`)))){
     // console.log(`we fount it `)
     // console.log(companySearch.length)
     // console.log(Boolean(stockSymbolSearch.find(e => (e!==`${companySearch}`))))
     stockDetailAPI(companySearch)
 
-  }else if (stockSymbolSearchResults.find(e=>e.displaySymbol===companySearch)) {
+  }else if (stockSymbolSearchResults.find(e=>e.displaySymbol===`${companySearch}`)) {
     // console.log(companySearch)
     stockDetailAPI(companySearch)
 
@@ -195,7 +196,7 @@ function changeNewsImage(){
   document.querySelector(`#nwsImg${i}`).src = news.results[i].multimedia[0].url
 }
 
-  function changeNewsCaption(){
+function changeNewsCaption(){
   //Displays caption that accompanies article
   document.querySelector(`#caption${i}`).innerHTML = news.results[i].multimedia[0].caption  
 }

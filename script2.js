@@ -42,11 +42,16 @@ function LS() {
 function stockSearch(){
   companySearch = document.querySelector('#stockSearch').value.toUpperCase()
   if(stockSymbolSearch.find(e => (e === companySearch))){
+    
+      console.log(`stockDetailAPI run option 1 from ifstatement`)
       stockDetailAPI(companySearch)
   }else if (stockSymbolSearchResults.find(e => e.displaySymbol === companySearch)) {
+    
+      console.log(`stockDetailAPI run option 2 from ifstatement`)
+
       stockDetailAPI(companySearch)
   }else if(companySearch.length > 2){
-      console.log(`keep searching`)
+      console.log(`keep searching run option 3 from ifstatement`)
       stockSymbolSearchAPI(companySearch)
     }
 }
@@ -189,7 +194,6 @@ function changeNewsCaption(){
 
 
 
-// console.log(lswl)
 
 // Scan local storage
 function checkLS(ssymbol) {
@@ -296,7 +300,7 @@ function renderChart(data, months){
 }
 
 
-let tickerTape =                    {
+let tickerTape = {
   "symbols": [
   {
       "proName": "FOREXCOM:SPXUSD",

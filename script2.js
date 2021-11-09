@@ -41,13 +41,14 @@ function LS() {
 
 function stockSearch(){
   companySearch = document.querySelector('#stockSearch').value.toUpperCase()
-  if((companySearch.length > 2) && (stockSymbolSearch.find(e => (e === companySearch)))){
+  if(stockSymbolSearch.find(e => (e === companySearch))){
       stockDetailAPI(companySearch)
   }else if (stockSymbolSearchResults.find(e => e.displaySymbol === companySearch)) {
       stockDetailAPI(companySearch)
   }else if(companySearch.length > 2){
       console.log(`keep searching`)
-      stockSymbolSearchAPI(companySearch)}
+      stockSymbolSearchAPI(companySearch)
+    }
 }
 
 // API to search stock symbols available - search while you type
@@ -92,8 +93,12 @@ async function stockDetailAPI(symbolSelected){
     basicFinancials = await fetch(`https://finnhub.io/api/v1/stock/metric?symbol=${symbolSelected}&metric=all&token=c2m4iqqad3idnodd7tdg`).then(r => r.json())
     candleInfo = await fetch(`https://finnhub.io/api/v1/stock/candle?symbol=${symbolSelected}&resolution=M&from=${aYearAgo}&to=${todaysDate}&token=c2m4iqqad3idnodd7tdg`).then(r=>r.json())
       
-    let timeStampHumanDate = new Date(corpQuote.t*1000)
 
+    console.log(basicFinancials.metric)
+    console.log(basicFinancials)
+
+
+    let timeStampHumanDate = new Date(corpQuote.t*1000)
  
     let timeStampMonth = months[timeStampHumanDate.getMonth()]
     let timeStampDay = days[timeStampHumanDate.getDay()]
@@ -238,8 +243,7 @@ function removeLocalStorage() {
 function watchlist() {
   document.querySelector('.list-group').innerHTML = ""
   var lswlLength = lswl.length
-  // console.log(lswl)
-  // console.log(lswlLength)
+
 
   for (i = 0; i < lswlLength; i++) {
     var tick = lswl[i].ticker

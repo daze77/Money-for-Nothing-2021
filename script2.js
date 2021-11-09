@@ -74,7 +74,7 @@ async function stockSymbolSearchAPI(autoQuery){
 
   stockSymbolSearchResults.forEach(stock =>  {
     document.querySelector('#datalistOptions').innerHTML +=
-    ` <option onClick="stockSearch(event)" value=${stock["displaySymbol"]} > ${stock["description"]}</option>`
+    ` <option value=${stock["displaySymbol"]} > ${stock["description"]}</option>`
     stockSymbolSearch.push({symbol: `${stock["displaySymbol"]}`, name: `${stock["description"]}`, mic: `${stock["mic"]}`})
 
   })

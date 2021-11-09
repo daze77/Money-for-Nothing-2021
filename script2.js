@@ -41,15 +41,18 @@ function LS() {
 
 function stockSearch(){
   companySearch = document.querySelector('#stockSearch').value.toUpperCase()
+
   if(stockSymbolSearch.find(e => (e === companySearch))){
     
-      console.log(`stockDetailAPI run option 1 from ifstatement`)
-      stockDetailAPI(companySearch)
-  }else if (stockSymbolSearchResults.find(e => e.displaySymbol === companySearch)) {
+    console.log(`stockDetailAPI run option 1 from ifstatement`)
+    stockDetailAPI(companySearch)
+  }
+ else if (stockSymbolSearchResults.find(e => e.displaySymbol === companySearch)) {
     
       console.log(`stockDetailAPI run option 2 from ifstatement`)
 
       stockDetailAPI(companySearch)
+      console.log(stockSymbolSearchResults.find(e => e.displaySymbol === companySearch))
   }else if(companySearch.length > 2){
       console.log(`keep searching run option 3 from ifstatement`)
       stockSymbolSearchAPI(companySearch)
@@ -71,18 +74,21 @@ async function stockSymbolSearchAPI(autoQuery){
   || e.mic === "XNAS"
   )
   )
-  // console.log(stockSymbolSearchResults)
-  // console.log(stockSymbols)
+    console.log(stockSymbols)
+    console.log('stocksymbolsearchResults', stockSymbolSearchResults)
 
-  document.querySelector('#datalistOptions').innerHTML = ""
-  stockSymbolSearch = []
+    document.querySelector('#datalistOptions').innerHTML = ""
 
-  stockSymbolSearchResults.forEach(stock =>  {
-    document.querySelector('#datalistOptions').innerHTML +=
-    ` <option value=${stock["displaySymbol"]} > ${stock["description"]}</option>`
-    stockSymbolSearch.push({symbol: `${stock["displaySymbol"]}`, name: `${stock["description"]}`, mic: `${stock["mic"]}`})
+    stockSymbolSearchResults.forEach(stock =>  {
+      document.querySelector('#datalistOptions').innerHTML +=
+      `<option value=${stock.displaySymbol}> ${stock.description}</option>`
 
-  })
+
+       stockSymbolSearch.push({symbol: `${stock["displaySymbol"]}`, name: `${stock["description"]}`, mic: `${stock["mic"]}`})
+    })
+
+   
+
 
 
 }

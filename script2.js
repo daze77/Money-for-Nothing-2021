@@ -160,15 +160,22 @@ async function stockDetailAPI(symbolSelected){
 async function getNews() {
   news = await fetch('https://api.nytimes.com/svc/topstories/v2/business.json?api-key=IlIdSVUvpiF5PABbTeerA3kRncTqyqAo').then(r => r.json())
   console.log(news)
+    news = news.results.filter(item => item.multimedia !== null)
+
+
   for (i = 0; i < 5; i++) {
 
-    title = news.results[i].title
+    title = news[i].title
     console.log(title)
-    url = news.results[i].url
+    url = news[i].url
     hotTitle = title.link(`${url}`)
     console.log(url)
-    image = news.results[i].multimedia[0].url
-    caption = news.results[i].multimedia[0].caption
+   
+    image = news[i].multimedia[0].url
+    caption = news[i].multimedia[0].caption
+
+ 
+
     changeNewsInfo()
     changeNewsImage()
     changeNewsCaption()
@@ -180,17 +187,17 @@ async function getNews() {
 // Displays news info in a card on screen
 function changeNewsInfo() {
   // Displays title of News
-  document.querySelector(`#newsstory${i}`).innerHTML = news.results[i].title.link(news.results[i].url)
+  document.querySelector(`#newsstory${i}`).innerHTML = hotTitle
 }
 
 function changeNewsImage(){
   //Displays image that accompanies article
-  document.querySelector(`#nwsImg${i}`).src = news.results[i].multimedia[0].url
+  document.querySelector(`#nwsImg${i}`).src = image
 }
 
 function changeNewsCaption(){
   //Displays caption that accompanies article
-  document.querySelector(`#caption${i}`).innerHTML = news.results[i].multimedia[0].caption  
+  document.querySelector(`#caption${i}`).innerHTML = caption  
 }
 //END NEWS API
 //----------------------------------------------------------------------------------------------------

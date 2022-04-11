@@ -81,7 +81,7 @@ async function stockSymbolSearchAPI(autoQuery){
 
     stockSymbolSearchResults.forEach(stock =>  {
       document.querySelector('#datalistOptions').innerHTML +=
-      `<option value=${stock.displaySymbol}> ${stock.description}</option>`
+      `<option value=${stock.displaySymbol} > ${stock.description}</option>`
 
 
        stockSymbolSearch.push({symbol: `${stock["displaySymbol"]}`, name: `${stock["description"]}`, mic: `${stock["mic"]}`})
@@ -92,6 +92,9 @@ async function stockSymbolSearchAPI(autoQuery){
 
 
 }
+
+
+
 
 // API to pull details about stock - various APIs used as this is a free tier service
 async function stockDetailAPI(symbolSelected){
@@ -160,7 +163,7 @@ async function stockDetailAPI(symbolSelected){
 async function getNews() {
   news = await fetch('https://api.nytimes.com/svc/topstories/v2/business.json?api-key=IlIdSVUvpiF5PABbTeerA3kRncTqyqAo').then(r => r.json())
   console.log(news)
-    news = news.results.filter(item => item.multimedia !== null)
+  news = news.results.filter(item => item.multimedia !== null)
 
 
   for (i = 0; i < 5; i++) {

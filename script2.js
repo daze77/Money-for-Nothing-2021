@@ -19,7 +19,7 @@ var stockSymb
 
 
 // API variables
-let corpQuote = []
+// let corpQuote = []
 let compDetails = []
 let basicFinancials = []
 let candleInfo = []
@@ -98,7 +98,7 @@ async function stockDetailAPI(symbolSelected){
 
     console.log(compDetails)
     
-    corpQuote = await fetch(`https://finnhub.io/api/v1/quote?symbol=${symbolSelected}&token=c2m4iqqad3idnodd7tdg`).then(r => r.json())
+    let corpQuote = await fetch(`https://finnhub.io/api/v1/quote?symbol=${symbolSelected}&token=c2m4iqqad3idnodd7tdg`).then(r => r.json())
     
     basicFinancials = await fetch(`https://finnhub.io/api/v1/stock/metric?symbol=${symbolSelected}&metric=all&token=c2m4iqqad3idnodd7tdg`).then(r => r.json())
     
@@ -156,7 +156,6 @@ async function getNews() {
     console.log(news)
     news = news.results.filter(item => item.multimedia !== null)
   
-  
     for (i = 0; i < 5; i++) {
   
       title = news[i].title
@@ -168,44 +167,24 @@ async function getNews() {
       image = news[i].multimedia[0].url
       caption = news[i].multimedia[0].caption
   
-   
-  
-      changeNewsInfo()
-      changeNewsImage()
-      changeNewsCaption()
-      
-  
+      changeNews()     
     }
 }
   
 // Displays news info in a card on screen
-function changeNewsInfo() {
+
+function changeNews(){
     // Displays title of News
     document.querySelector(`#newsstory${i}`).innerHTML = hotTitle
-}
-  
-
-function changeNewsImage(){
     //Displays image that accompanies article
     document.querySelector(`#nwsImg${i}`).src = image
-}
-
-function changeNewsCaption(){
     //Displays caption that accompanies article
-    document.querySelector(`#caption${i}`).innerHTML = caption  
+    document.querySelector(`#caption${i}`).innerHTML = caption 
+
 }
 //END NEWS API
 //----------------------------------------------------------------------------------------------------
   
-
-
-
-
-
-
-
-
-
 
   // Scan local storage
 function checkLS(ssymbol) {
@@ -218,14 +197,10 @@ function checkLS(ssymbol) {
 
   // Watchlist button trigger (add or remove from list)
 function watchListBtn(event) {
-
-
-
-  
-    // console.log("Watch List button pressed")
-    var wlbtnresults = document.querySelector('.wlbtn').innerText
-    wlbtnresults === "+ to Watchlist" ? addLocalStorage(event) : removeLocalStorage(event)
-  }
+  // console.log("Watch List button pressed")
+  var wlbtnresults = document.querySelector('.wlbtn').innerText
+  wlbtnresults === "+ to Watchlist" ? addLocalStorage(event) : removeLocalStorage(event)
+}
   
   
   // save items to local storage
@@ -238,7 +213,7 @@ function watchListBtn(event) {
     lswl.push(newCompany)
     localStorage.lswl=JSON.stringify(lswl)
   
-    checkLS( symbol)
+    checkLS(symbol)
     watchlist()
   }
   
@@ -253,16 +228,13 @@ function watchListBtn(event) {
   // Add to  Watchlist
   function watchlist() {
     document.querySelector('.list-group').innerHTML = ""
-    var lswlLength = lswl.length
   
-  
-    for (i = 0; i < lswlLength; i++) {
+    for (i = 0; i < lswl.length; i++) {
       var tick = lswl[i].ticker
       var nam = lswl[i].name
   
       document.querySelector('.list-group').innerHTML += 
-        `
-          <li class="wlBtn"> 
+        `<li class="wlBtn"> 
             <button type="button" class="btn btn-outline-light" onClick="wlBtnSearch('${tick}')">
               <span id="stkName">${nam}</span> - <span id = "stkSymb">${tick}</span>
             </button>
@@ -282,8 +254,8 @@ function watchListBtn(event) {
   function renderChart(data, months){
     labels = months;
     data = {
-      labels: labels,
-      datasets: [{
+        labels: labels,
+        datasets: [{
         label: 'Monthly Closing Prices',
         backgroundColor: 'rgb(84,10,154)',
         borderColor: 'rgb(84,10,154)',

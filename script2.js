@@ -23,7 +23,6 @@ let candleInfo = []
 // check local storage for entry
 function LS() {
     lswl = localStorage.lswl ? JSON.parse(localStorage.lswl) : []
-    console.log('we checked local storage', lswl)
   
     // if local storage has an entry populate watchlist
     watchlist()
@@ -44,7 +43,6 @@ async function pullStockList(){
       || e.mic === "IEXG"
       || e.mic === "XNAS"
       )
-      console.log('this is the filtered list --> newStockList', fullStockList)
 
 }
 
@@ -86,7 +84,6 @@ function filterResultsOptions(res){
 
 
 async function stockDetailAPI(symbolSelected){
-    console.log('we made it this is the symbol', symbolSelected)
 
     let todaysDate = Math.floor(Date.now()/1000)
     let aYearAgo = Math.floor((new Date().setDate(new Date().getDate()-365))/1000)
@@ -158,16 +155,13 @@ async function stockDetailAPI(symbolSelected){
 // get news API
 async function getNews() {
     news = await fetch('https://api.nytimes.com/svc/topstories/v2/business.json?api-key=IlIdSVUvpiF5PABbTeerA3kRncTqyqAo').then(r => r.json())
-    console.log(news)
     news = news.results.filter(item => item.multimedia !== null)
   
     for (i = 0; i < 5; i++) {
   
       title = news[i].title
-      console.log(title)
       url = news[i].url
       hotTitle = title.link(`${url}`)
-      console.log(url)
      
       image = news[i].multimedia[0].url
       caption = news[i].multimedia[0].caption
@@ -192,9 +186,7 @@ function changeNews(){
 // Scan local storage
 function checkLS(symbol) {
   if(e=> e.ticker === symbol){
-    console.log('yes we found it')
   }else {
-    console.log('nope nothing')
   }
     lswl.find(e => (e.ticker===symbol)) ? 
     (document.querySelector('.wlbtn').classList.replace("btn-success", "btn-danger"),
@@ -212,8 +204,6 @@ function watchListBtn() {
   const symbol = document.querySelector('.wlbtn').getAttribute('data-stockSymbol')
   const wlbtnresults = document.querySelector('.wlbtn').innerText
   
-  console.log('remove what', symbol)
-
   if(wlbtnresults === '+ to Watchlist'){
 
     newCompany = {
@@ -246,7 +236,6 @@ function watchListBtn() {
   
     for (i = 0; i < lswl.length; i++) {
       var tick = lswl[i].ticker
-      console.log('what is tick', tick)
       var nam = lswl[i].name
   
       document.querySelector('.list-group').innerHTML += 

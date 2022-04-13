@@ -165,20 +165,16 @@ async function getNews() {
      
       image = news[i].multimedia[0].url
       caption = news[i].multimedia[0].caption
-  
-      changeNews()     
+
+
+      document.querySelector(`#newsstory${i}`).innerHTML = hotTitle
+      document.querySelector(`#nwsImg${i}`).src = image
+      document.querySelector(`#caption${i}`).innerHTML = caption 
+
     }
 }
   
-// Displays news info in a card on screen
-function changeNews(){
-    // Displays title of News
-    document.querySelector(`#newsstory${i}`).innerHTML = hotTitle
-    //Displays image that accompanies article
-    document.querySelector(`#nwsImg${i}`).src = image
-    //Displays caption that accompanies article
-    document.querySelector(`#caption${i}`).innerHTML = caption 
-}
+
 //END NEWS API
 //----------------------------------------------------------------------------------------------------
   

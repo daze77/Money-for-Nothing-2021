@@ -1,4 +1,3 @@
-
 const token = 'sandbox_c2m4iqqad3idnodd7te0'
 
 const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
@@ -56,32 +55,28 @@ let filterResults = []
 
 function stockSearch(){
     let companySearch = document.querySelector('#stockSearch').value.toUpperCase()
-
-    filterResults = fullStockList.filter(list => list.description.includes(companySearch) || list.displaySymbol.includes(companySearch))
     
+    filterResults = fullStockList.filter(list => list.description.includes(companySearch) || list.displaySymbol.includes(companySearch))
+
     filterResultsOptions(filterResults)
-
-    if(companySearch.includes('-')){
-      companySearch = companySearch.split('-')
-
-      const results = fullStockList.filter(item => item.displaySymbol === companySearch[0] && item.description.includes(companySearch[1]))
-
-      filterResultsOptions(results)
-    }
 }
 
 function filterResultsOptions(res){
+    console.log('res', res)
+    console.log('res', res.length)
 
     if(res.length === 1){
         document.querySelector('#datalistOptions1').innerHTML = ""
+        console.log('yo')
         
-        res.forEach(stock => document.querySelector('#datalistOptions1').innerHTML += `<option value=${stock.displaySymbol}-${stock.description}> ${stock.description}</option>`
+        res.forEach(stock => document.querySelector('#datalistOptions1').innerHTML += `<option value=${stock.displaySymbol}> ${stock.description}</option>`
         )
+        console.log('does', res)
         stockDetailAPI(res[0].displaySymbol)
-    }else if(res.length <=30){
+    }else if    (res.length <=30){
         document.querySelector('#datalistOptions1').innerHTML = ""
         
-        res.forEach(stock => document.querySelector('#datalistOptions1').innerHTML += `<option value=${stock.displaySymbol}-${stock.description}> ${stock.description}</option>`
+        res.forEach(stock => document.querySelector('#datalistOptions1').innerHTML += `<option value=${stock.displaySymbol}> ${stock.description}</option>`
         )
     }
 }
@@ -93,6 +88,7 @@ async function stockDetailAPI(symbolSelected){
 
     let todaysDate = Math.floor(Date.now()/1000)
     let aYearAgo = Math.floor((new Date().setDate(new Date().getDate()-365))/1000)
+
 
     compDetails  = await fetch(`https://finnhub.io/api/v1/stock/profile2?symbol=${symbolSelected}&token=c2m4iqqad3idnodd7tdg`).then(r => r.json())
 

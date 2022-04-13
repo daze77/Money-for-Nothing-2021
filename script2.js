@@ -44,7 +44,7 @@ async function pullStockList(){
 
 
 function stockSearch(){
-  const companySearch = document.querySelector('#stockSearch').value.toUpperCase()
+  let companySearch = document.querySelector('#stockSearch').value.toUpperCase()
 
   filterResults = fullStockList.filter(list => list.description.includes(companySearch) || list.displaySymbol.includes(companySearch))
   

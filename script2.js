@@ -75,13 +75,13 @@ function filterResultsOptions(res){
     if(res.length === 1){
         document.querySelector('#datalistOptions1').innerHTML = ""
         
-        res.forEach(stock => document.querySelector('#datalistOptions1').innerHTML += `<option value=${stock.displaySymbol}-${stock.description}> ${stock.description}</option>`
+        res.forEach(stock => document.querySelector('#datalistOptions1').innerHTML += `<option value=${stock.displaySymbol}-${stock.description} > ${stock.description}</option>`
         )
         stockDetailAPI(res[0].displaySymbol)
     }else if(res.length <=30){
         document.querySelector('#datalistOptions1').innerHTML = ""
         
-        res.forEach(stock => document.querySelector('#datalistOptions1').innerHTML += `<option value=${stock.displaySymbol}-${stock.description}> ${stock.description}</option>`
+        res.forEach(stock => document.querySelector('#datalistOptions1').innerHTML += `<option value=${stock.displaySymbol}-${stock.description} > ${stock.description}</option>`
         )
     }
 }

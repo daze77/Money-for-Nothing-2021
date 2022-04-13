@@ -23,6 +23,7 @@ let candleInfo = []
 // check local storage for entry
 function LS() {
     lswl = localStorage.lswl ? JSON.parse(localStorage.lswl) : []
+    console.log('we checked local storage', lswl)
   
     // if local storage has an entry populate watchlist
     watchlist()
@@ -90,30 +91,19 @@ async function stockDetailAPI(symbolSelected){
     let todaysDate = Math.floor(Date.now()/1000)
     let aYearAgo = Math.floor((new Date().setDate(new Date().getDate()-365))/1000)
 
-    console.log(todaysDate)
-    console.log(aYearAgo)
-
     compDetails  = await fetch(`https://finnhub.io/api/v1/stock/profile2?symbol=${symbolSelected}&token=${token}`).then(r => r.json())
-
-    console.log(compDetails)
-    
+ 
     let corpQuote = await fetch(`https://finnhub.io/api/v1/quote?symbol=${symbolSelected}&token=${token}`).then(r => r.json())
     
     basicFinancials = await fetch(`https://finnhub.io/api/v1/stock/metric?symbol=${symbolSelected}&metric=all&token=${token}`).then(r => r.json())
     
     candleInfo = await fetch(`https://finnhub.io/api/v1/stock/candle?symbol=${symbolSelected}&resolution=M&from=${aYearAgo}&to=${todaysDate}&token=${token}`).then(r=>r.json())
 
-
-    console.log(candleInfo)
-
     let timeStampHumanDate = new Date(corpQuote.t*1000)
- 
     let timeStampMonth = months[timeStampHumanDate.getMonth()]
     let timeStampDay = days[timeStampHumanDate.getDay()]
     let timeStampDate = timeStampHumanDate.getDate()
     let timeStampYear = timeStampHumanDate.getFullYear()
-
-
 
     // fill the company card with details
     document.querySelector('#sharePrice').innerHTML = `Share Price (USD):  <span>$ ${corpQuote.c}</span>`
@@ -129,7 +119,16 @@ async function stockDetailAPI(symbolSelected){
     document.querySelector('#cardheadQuarters').innerHTML = `Headquarters: ${compDetails["country"]}`
     document.querySelector('#cardType').innerHTML = `Sector:  ${compDetails["finnhubIndustry"]}`
 
-    document.querySelector('.wlbtn').setAttribute('data-stockSymbol', symbolSelected)
+
+
+
+
+
+
+
+
+
+
 
 
     // flag color of quarterlies - negative value is red
@@ -190,11 +189,22 @@ function changeNews(){
   
 
 // Scan local storage
-function checkLS(ssymbol) {
-    lswl.find(e => (e.ticker===ssymbol)) ? 
-    (console.log("already on list"), document.querySelector('.wlbtn').classList.replace("btn-success", "btn-danger"),
-    document.querySelector('.wlbtn').innerHTML = "- from Watchlist") :  (console.log("not yet on list"),document.querySelector('.wlbtn').classList.replace("btn-danger", "btn-success"),
+function checkLS(symbol) {
+  if(e=> e.ticker === symbol){
+    console.log('yes we found it')
+  }else {
+    console.log('nope nothing')
+  }
+    lswl.find(e => (e.ticker===symbol)) ? 
+    (document.querySelector('.wlbtn').classList.replace("btn-success", "btn-danger"),
+    document.querySelector('.wlbtn').innerHTML = "- from Watchlist") 
+    :  (document.querySelector('.wlbtn').classList.replace("btn-danger", "btn-success"),
     document.querySelector('.wlbtn').innerHTML = "+ to Watchlist")
+
+    document.querySelector('.wlbtn').setAttribute('data-stockSymbol', symbol)
+//this might need to move only want button to show when a stock info has appeared
+    document.querySelector('.wlbtn').style.display ="block"
+    
   }
 
 
@@ -203,12 +213,10 @@ function watchListBtn() {
   const symbol = document.querySelector('.wlbtn').getAttribute('data-stockSymbol')
   const wlbtnresults = document.querySelector('.wlbtn').innerText
   
-  wlbtnresults === "+ to Watchlist" ? addLocalStorage(symbol) : removeLocalStorage(symbol)
-}
-  
-  
-  // save items to local storage
-  function addLocalStorage(symbol) {
+  console.log('remove what', symbol)
+
+  if(wlbtnresults === '+ to Watchlist'){
+
     newCompany = {
       name: `${compDetails["name"]}`,
       ticker: symbol,
@@ -216,18 +224,23 @@ function watchListBtn() {
   
     lswl.push(newCompany)
     localStorage.lswl=JSON.stringify(lswl)
-  
+
     checkLS(symbol)
     watchlist()
-  }
-  
-  // remove from local storage
-  function removeLocalStorage(symbol) {
-    lswl = lswl.filter(e => (e.ticker !== symbol))
+
+  }else if(wlbtnresults === '- from Watchlist'){
+
+    lswl = lswl.filter(e => e.ticker !== symbol)
     localStorage.lswl = JSON.stringify(lswl)
-    watchlist(symbol)
+
     checkLS(symbol)
+    watchlist()
+
   }
+
+}
+  
+  
   
   // Add to  Watchlist
   function watchlist() {
@@ -240,20 +253,15 @@ function watchListBtn() {
   
       document.querySelector('.list-group').innerHTML += 
         `<li class="wlBtn"> 
-            <button type="button" class="btn btn-outline-light" onClick="wlBtnSearch('${tick}')">
-              <span id="stkName">${nam}</span> - <span id = "stkSymb">${tick}</span>
+            <button type="button" class="btn btn-outline-light" onClick="stockDetailAPI('${tick}')">
+              <span id="stkName">${nam}</span> - <span id="stkSymb">${tick}</span>
             </button>
           </li>
         `  
     }
   }
   
-  // when a watchlist item is selected, pass the company name via the search function trigger
-  function wlBtnSearch(tick) {
-    stockDetailAPI(tick)
-    checkLS(tick)
-  }
-  
+
   
   // chart rendering function
   function renderChart(data, months){

@@ -9,9 +9,12 @@
 
 .wlBtn .btn{
     background-color: rgb(84, 10, 154);
-    /* border: rgb(85, 10, 155) solid; */
     border-radius: 1.45rem;
     
+}
+
+.wlbtn{
+    display: none;
 }
 
 .btn{

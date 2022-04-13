@@ -15,6 +15,7 @@
 
 .wlbtn{
     display: none;
+    transition-duration: .6s;
 }
 
 .btn{

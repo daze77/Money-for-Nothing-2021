@@ -122,6 +122,7 @@ async function stockDetailAPI(symbolSelected){
 
 
 
+    document.querySelector('.wlbtn').style.display ="block"
 
 
 
@@ -202,8 +203,6 @@ function checkLS(symbol) {
     document.querySelector('.wlbtn').innerHTML = "+ to Watchlist")
 
     document.querySelector('.wlbtn').setAttribute('data-stockSymbol', symbol)
-//this might need to move only want button to show when a stock info has appeared
-    document.querySelector('.wlbtn').style.display ="block"
     
   }
 
@@ -240,8 +239,7 @@ function watchListBtn() {
 
 }
   
-  
-  
+
   // Add to  Watchlist
   function watchlist() {
     document.querySelector('.list-group').innerHTML = ""
